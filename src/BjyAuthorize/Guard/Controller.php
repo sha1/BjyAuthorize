@@ -71,7 +71,7 @@ class Controller extends AbstractGuard
      *
      * @param MvcEvent $event
      *
-     * @return void
+     * @return mixed
      */
     public function onDispatch(MvcEvent $event)
     {

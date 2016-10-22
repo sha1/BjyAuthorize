@@ -44,7 +44,7 @@ class Route extends AbstractGuard
      *
      * @param MvcEvent $event
      *
-     * @return void
+     * @return mixed
      */
     public function onRoute(MvcEvent $event)
     {

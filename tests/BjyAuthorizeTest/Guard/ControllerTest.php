@@ -247,12 +247,16 @@ class ControllerTest extends PHPUnit_Framework_TestCase
             $this->isInstanceOf(UnAuthorizedException::class)
         );
 
+        $responseCollection = $this->getMockBuilder(\Zend\EventManager\ResponseCollection::class)
+            ->getMock();
+
         $event
             ->getTarget()
             ->getEventManager()
             ->expects($this->once())
             ->method('trigger')
-            ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, []);
+            ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, [])
+            ->willReturn($responseCollection);
 
         $this->assertNull($this->controllerGuard->onDispatch($event), 'Does not stop event propagation');
     }

@@ -212,12 +212,16 @@ class RouteTest extends PHPUnit_Framework_TestCase
             $this->isInstanceOf('BjyAuthorize\Exception\UnAuthorizedException')
         );
 
+        $responseCollection = $this->getMockBuilder(\Zend\EventManager\ResponseCollection::class)
+            ->getMock();
+
         $event
             ->getTarget()
             ->getEventManager()
             ->expects($this->once())
             ->method('trigger')
-            ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, $event->getParams());
+            ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, $event->getParams())
+            ->willReturn($responseCollection);
 
         $this->assertNull($this->routeGuard->onRoute($event), 'Does not stop event propagation');
     }
