@@ -1,6 +1,6 @@
 {
     "name":         "kokspflanze/bjy-authorize",
-    "description":  "Zend\\Acl based firewall system for ZF2 dispatch protection",
+    "description":  "Zend\\Acl based firewall system for ZF2/3 dispatch protection",
     "type":         "library",
     "license":      "BSD-3-Clause",
     "homepage":     "https://github.com/bjyoungblood/BjyAuthorize",
