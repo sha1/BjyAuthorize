@@ -74,4 +74,4 @@ install:
   - COLUMNS=120 composer show
 
 script:
- - php ./vendor/bin/phpunit --configuration tests/phpunit.xml
+ - php ./vendor/bin/phpunit --configuration phpunit.xml.dist
