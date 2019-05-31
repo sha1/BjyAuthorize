@@ -9,7 +9,7 @@
 namespace BjyAuthorizeTest\Guard;
 
 use BjyAuthorize\Exception\UnAuthorizedException;
-use PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Guard\Controller;
 use Zend\Mvc\MvcEvent;
 
@@ -18,7 +18,7 @@ use Zend\Mvc\MvcEvent;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ControllerTest extends PHPUnit_Framework_TestCase
+class ControllerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -44,9 +44,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->serviceLocator  = $locator = $this->getMock('Zend\\ServiceManager\\ServiceLocatorInterface');
-        $this->authorize = $authorize = $this->getMock('BjyAuthorize\\Service\\Authorize', array(), array(), '', false);
-        $this->controllerGuard = new Controller(array(), $this->serviceLocator);
+        $this->serviceLocator  = $locator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $this->authorize = $authorize = $this->getMockBuilder('BjyAuthorize\\Service\\Authorize')->disableOriginalConstructor()->getMock();
+        $this->controllerGuard = new Controller([], $this->serviceLocator);
 
         $this
             ->serviceLocator
@@ -98,7 +98,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetResourcesGetRules($rule, $expectedCount, $resource, $roles)
     {
-        $controller = new Controller(array($rule), $this->serviceLocator);
+        $controller = new Controller([$rule], $this->serviceLocator);
 
         $resources = $controller->getResources();
 
@@ -108,7 +108,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         $rules = $controller->getRules();
 
         $this->assertCount($expectedCount, $rules['allow']);
-        $this->assertContains(array($roles, $resource), $rules['allow']);
+        $this->assertContains([$roles, $resource], $rules['allow']);
     }
 
     /**
@@ -125,11 +125,11 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRulesWithAssertion($rule, $expectedCount, $resource, $roles, $assertion)
     {
-        $controller = new Controller(array($rule), $this->serviceLocator);
+        $controller = new Controller([$rule], $this->serviceLocator);
         $rules      = $controller->getRules();
 
         $this->assertCount($expectedCount, $rules['allow']);
-        $this->assertContains(array($roles, $resource, null, $assertion), $rules['allow']);
+        $this->assertContains([$roles, $resource, null, $assertion], $rules['allow']);
     }
 
     /**
@@ -273,14 +273,14 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         $eventManager = $this->getMockBuilder('Zend\\EventManager\\EventManagerInterface')
             ->getMock();
         $application  = $this->getMockBuilder('Zend\\Mvc\\Application')
-            ->setMethods(array('getEventManager'))
+            ->setMethods(['getEventManager'])
             ->disableOriginalConstructor()
             ->getMock();
         $event        = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
-            ->setMethods(array('getTarget', 'getRouteMatch', 'getRequest', 'setError', 'setParam'))
+            ->setMethods(['getTarget', 'getRouteMatch', 'getRequest', 'setError', 'setParam'])
             ->getMock();
         $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
-            ->setMethods(array('getParam'))
+            ->setMethods(['getParam'])
             ->disableOriginalConstructor()
             ->getMock();
         $request      = $this->getMockBuilder('Zend\\Http\\Request')
@@ -321,149 +321,149 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function controllersRulesProvider()
     {
-        return array(
-            array(
-                array(
+        return [
+            [
+                [
                     'controller' => 'test-controller',
                     'action'     => 'test-action',
-                    'roles'      => array(
+                    'roles'      => [
                         'admin',
                         'user',
-                    ),
-                ),
+                    ],
+                ],
                 1,
                 'controller/test-controller:test-action',
-                array('admin', 'user')
-            ),
-            array(
-                array(
+                ['admin', 'user']
+            ],
+            [
+                [
                     'controller' => 'test2-controller',
-                    'roles'      => array(
+                    'roles'      => [
                         'admin2',
                         'user2',
-                    ),
-                ),
+                    ],
+                ],
                 1,
                 'controller/test2-controller',
-                array('admin2', 'user2')
-            ),
-            array(
-                array(
+                ['admin2', 'user2']
+            ],
+            [
+                [
                     'controller' => 'test3-controller',
                     'action'     => 'test3-action',
                     'roles'      => 'admin3'
-                ),
+                ],
                 1,
                 'controller/test3-controller:test3-action',
-                array('admin3')
-            ),
-            array(
-                array(
+                ['admin3']
+            ],
+            [
+                [
                     'controller' => 'test4-controller',
-                    'action'     => array(
+                    'action'     => [
                         'test4-action',
                         'test5-action',
-                    ),
-                    'roles'      => array(
+                    ],
+                    'roles'      => [
                         'admin4',
                         'user3',
-                    ),
-                ),
+                    ],
+                ],
                 2,
                 'controller/test4-controller:test4-action',
-                array('admin4', 'user3')
-            ),
-            array(
-                array(
+                ['admin4', 'user3']
+            ],
+            [
+                [
                     'controller' => 'test4-controller',
-                    'action'     => array(
+                    'action'     => [
                         'test4-action',
                         'test5-action',
-                    ),
-                    'roles'      => array(
+                    ],
+                    'roles'      => [
                         'admin4',
                         'user3',
-                    ),
-                ),
+                    ],
+                ],
                 2,
                 'controller/test4-controller:test5-action',
-                array('admin4', 'user3')
-            ),
-            array(
-                array(
+                ['admin4', 'user3']
+            ],
+            [
+                [
                     'controller' => 'test5-controller',
                     'action'     => null,
                     'roles'      => 'user4'
-                ),
+                ],
                 1,
                 'controller/test5-controller',
-                array('user4')
-            ),
-            array(
-                array(
-                    'controller' => array(
+                ['user4']
+            ],
+            [
+                [
+                    'controller' => [
                         'test6-controller',
                         'test7-controller',
-                    ),
+                    ],
                     'action'     => null,
                     'roles'      => 'user5'
-                ),
+                ],
                 2,
                 'controller/test6-controller',
-                array('user5')
-            ),
-            array(
-                array(
-                    'controller' => array(
+                ['user5']
+            ],
+            [
+                [
+                    'controller' => [
                         'test6-controller',
                         'test7-controller',
-                    ),
+                    ],
                     'action'     => null,
                     'roles'      => 'user5'
-                ),
+                ],
                 2,
                 'controller/test7-controller',
-                array('user5')
-            ),
-            array(
-                array(
-                    'controller' => array(
+                ['user5']
+            ],
+            [
+                [
+                    'controller' => [
                         'test6-controller',
                         'test7-controller',
-                    ),
-                    'action'     => array(
+                    ],
+                    'action'     => [
                         'test6-action',
                         'test7-action',
-                    ),
-                    'roles'      => array(
+                    ],
+                    'roles'      => [
                         'admin5',
                         'user6',
-                    ),
-                ),
+                    ],
+                ],
                 4,
                 'controller/test6-controller:test6-action',
-                array('admin5', 'user6')
-            ),
-            array(
-                array(
-                    'controller' => array(
+                ['admin5', 'user6']
+            ],
+            [
+                [
+                    'controller' => [
                         'test6-controller',
                         'test7-controller',
-                    ),
-                    'action'     => array(
+                    ],
+                    'action'     => [
                         'test6-action',
                         'test7-action',
-                    ),
-                    'roles'      => array(
+                    ],
+                    'roles'      => [
                         'admin5',
                         'user6',
-                    ),
-                ),
+                    ],
+                ],
                 4,
                 'controller/test7-controller:test7-action',
-                array('admin5', 'user6')
-            )
-        );
+                ['admin5', 'user6']
+            ]
+        ];
     }
 
     /**
@@ -474,43 +474,43 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function controllersRulesWithAssertionProvider()
     {
-        return array(
-            array(
-                array(
+        return [
+            [
+                [
                     'controller' => 'test-controller',
                     'action'     => 'test-action',
-                    'roles'      => array(
+                    'roles'      => [
                         'admin',
                         'user',
-                    ),
+                    ],
                     'assertion' => 'test-assertion'
-                ),
+                ],
                 1,
                 'controller/test-controller:test-action',
-                array('admin', 'user'),
+                ['admin', 'user'],
                 'test-assertion'
-            ),
-            array(
-                array(
-                    'controller' => array(
+            ],
+            [
+                [
+                    'controller' => [
                         'test6-controller',
                         'test7-controller',
-                    ),
-                    'action'     => array(
+                    ],
+                    'action'     => [
                         'test6-action',
                         'test7-action',
-                    ),
-                    'roles'      => array(
+                    ],
+                    'roles'      => [
                         'admin5',
                         'user6',
-                    ),
+                    ],
                     'assertion' => 'test-assertion'
-                ),
+                ],
                 4,
                 'controller/test6-controller:test6-action',
-                array('admin5', 'user6'),
+                ['admin5', 'user6'],
                 'test-assertion'
-            )
-        );
+            ]
+        ];
     }
 }

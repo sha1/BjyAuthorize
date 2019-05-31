@@ -27,7 +27,7 @@ class Route extends AbstractGuard
 
     protected function extractResourcesFromRule(array $rule)
     {
-        return array('route/' . $rule['route']);
+        return ['route/' . $rule['route']];
     }
 
     /**
@@ -35,7 +35,7 @@ class Route extends AbstractGuard
      */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, array($this, 'onRoute'), -1000);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], -1000);
     }
 
     /**

@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection ALL */
+
 /**
  * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
  *
@@ -26,7 +27,7 @@ abstract class AbstractGuard extends AbstractListenerAggregate implements
     /**
      * @var array[]
      */
-    protected $rules = array();
+    protected $rules = [];
 
     /**
      *
@@ -39,10 +40,10 @@ abstract class AbstractGuard extends AbstractListenerAggregate implements
 
         foreach ($rules as $rule) {
             $rule['roles'] = (array)$rule['roles'];
-            $rule['action'] = isset($rule['action']) ? (array)$rule['action'] : array(null);
+            $rule['action'] = isset($rule['action']) ? (array)$rule['action'] : [null];
 
             foreach ($this->extractResourcesFromRule($rule) as $resource) {
-                $this->rules[$resource] = array('roles' => (array)$rule['roles']);
+                $this->rules[$resource] = ['roles' => (array)$rule['roles']];
 
                 if (isset($rule['assertion'])) {
                     $this->rules[$resource]['assertion'] = $rule['assertion'];
@@ -58,7 +59,7 @@ abstract class AbstractGuard extends AbstractListenerAggregate implements
      */
     public function getResources()
     {
-        $resources = array();
+        $resources = [];
 
         foreach (array_keys($this->rules) as $resource) {
             $resources[] = $resource;
@@ -72,9 +73,9 @@ abstract class AbstractGuard extends AbstractListenerAggregate implements
      */
     public function getRules()
     {
-        $rules = array();
+        $rules = [];
         foreach ($this->rules as $resource => $ruleData) {
-            $rule = array();
+            $rule = [];
             $rule[] = $ruleData['roles'];
             $rule[] = $resource;
 
@@ -86,6 +87,6 @@ abstract class AbstractGuard extends AbstractListenerAggregate implements
             $rules[] = $rule;
         }
 
-        return array('allow' => $rules);
+        return ['allow' => $rules];
     }
 }

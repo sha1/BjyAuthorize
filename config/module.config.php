@@ -6,8 +6,8 @@
  * @license http://framework.zend.com/license/new-bsd New BSD License
  */
 
-return array(
-    'bjyauthorize' => array(
+return [
+    'bjyauthorize' => [
         // default role for unauthenticated users
         'default_role'          => 'guest',
 
@@ -20,18 +20,18 @@ return array(
 
         // Role providers to be used to load all available roles into Zend\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
-        'role_providers'        => array(),
+        'role_providers'        => [],
 
         // Resource providers to be used to load all available resources into Zend\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
-        'resource_providers'    => array(),
+        'resource_providers'    => [],
 
         // Rule providers to be used to load all available rules into Zend\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
-        'rule_providers'        => array(),
+        'rule_providers'        => [],
 
         // Guard listeners to be attached to the application event manager
-        'guards'                => array(),
+        'guards'                => [],
 
         // strategy service name for the strategy listener to be used when permission-related errors are detected
         'unauthorized_strategy' => 'BjyAuthorize\View\UnauthorizedStrategy',
@@ -40,21 +40,21 @@ return array(
         'template'              => 'error/403',
 
         // cache options have to be compatible with Zend\Cache\StorageFactory::factory
-        'cache_options'         => array(
-            'adapter'   => array(
+        'cache_options'         => [
+            'adapter'   => [
                 'name' => 'memory',
-            ),
-            'plugins'   => array(
+            ],
+            'plugins'   => [
                 'serializer',
-            )
-        ),
+            ]
+        ],
 
         // Key used by the cache for caching the acl
         'cache_key'             => 'bjyauthorize_acl'
-    ),
+    ],
 
-    'service_manager' => array(
-        'factories' => array(
+    'service_manager' => [
+        'factories' => [
             'BjyAuthorize\Cache'                    => 'BjyAuthorize\Service\CacheFactory',
             'BjyAuthorize\CacheKeyGenerator'        => 'BjyAuthorize\Service\CacheKeyGeneratorFactory',
             'BjyAuthorize\Config'                   => 'BjyAuthorize\Service\ConfigServiceFactory',
@@ -81,37 +81,37 @@ return array(
             'BjyAuthorize\View\UnauthorizedStrategy'
                 => 'BjyAuthorize\Service\UnauthorizedStrategyServiceFactory',
             'BjyAuthorize\Service\RoleDbTableGateway' => 'BjyAuthorize\Service\UserRoleServiceFactory',
-        ),
-        'invokables'  => array(
+        ],
+        'invokables'  => [
             'BjyAuthorize\View\RedirectionStrategy' => 'BjyAuthorize\View\RedirectionStrategy',
-        ),
-        'aliases'     => array(
+        ],
+        'aliases'     => [
             'bjyauthorize_zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
-        ),
-        'initializers' => array(
+        ],
+        'initializers' => [
             'BjyAuthorize\Service\AuthorizeAwareServiceInitializer'
                 => 'BjyAuthorize\Service\AuthorizeAwareServiceInitializer'
-        ),
-    ),
+        ],
+    ],
 
-    'view_manager' => array(
-        'template_map' => array(
+    'view_manager' => [
+        'template_map' => [
             'error/403' => __DIR__ . '/../view/error/403.phtml',
             'zend-developer-tools/toolbar/bjy-authorize-role'
                 => __DIR__ . '/../view/zend-developer-tools/toolbar/bjy-authorize-role.phtml',
-        ),
-    ),
+        ],
+    ],
 
-    'zenddevelopertools' => array(
-        'profiler' => array(
-            'collectors' => array(
+    'zenddevelopertools' => [
+        'profiler' => [
+            'collectors' => [
                 'bjy_authorize_role_collector' => 'BjyAuthorize\\Collector\\RoleCollector',
-            ),
-        ),
-        'toolbar' => array(
-            'entries' => array(
+            ],
+        ],
+        'toolbar' => [
+            'entries' => [
                 'bjy_authorize_role_collector' => 'zend-developer-tools/toolbar/bjy-authorize-role',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];

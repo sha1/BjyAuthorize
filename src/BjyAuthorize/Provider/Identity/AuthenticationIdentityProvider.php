@@ -49,18 +49,18 @@ class AuthenticationIdentityProvider implements ProviderInterface
     public function getIdentityRoles()
     {
         if (!$identity = $this->authService->getIdentity()) {
-            return array($this->defaultRole);
+            return [$this->defaultRole];
         }
 
         if ($identity instanceof RoleInterface) {
-            return array($identity);
+            return [$identity];
         }
 
         if ($identity instanceof RoleProviderInterface) {
             return $identity->getRoles();
         }
 
-        return array($this->authenticatedRole);
+        return [$this->authenticatedRole];
     }
 
     /**

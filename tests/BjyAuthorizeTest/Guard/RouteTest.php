@@ -8,7 +8,7 @@
 
 namespace BjyAuthorizeTest\Guard;
 
-use PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Guard\Route;
 use Zend\Mvc\MvcEvent;
 
@@ -17,7 +17,7 @@ use Zend\Mvc\MvcEvent;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RouteTest extends PHPUnit_Framework_TestCase
+class RouteTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -47,9 +47,9 @@ class RouteTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $this->authorize = $authorize = $this->getMockBuilder('BjyAuthorize\\Service\\Authorize')
             ->disableOriginalConstructor()
-            ->setMethods(array('isAllowed', 'getIdentity'))
+            ->setMethods(['isAllowed', 'getIdentity'])
             ->getMock();
-        $this->routeGuard = new Route(array(), $this->serviceLocator);
+        $this->routeGuard = new Route([], $this->serviceLocator);
 
         $this
             ->serviceLocator
@@ -65,7 +65,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
      */
     public function testAttachDetach()
     {
-        $eventManager = $this->getMock('Zend\\EventManager\\EventManagerInterface');
+        $eventManager = $this->createMock('Zend\\EventManager\\EventManagerInterface');
 
         $callbackMock = $this->getMockBuilder(\stdClass::class)
             ->setMethods(['__invoke'])
@@ -93,26 +93,26 @@ class RouteTest extends PHPUnit_Framework_TestCase
     public function testGetResourcesGetRules()
     {
         $controller = new Route(
-            array(
-                 array(
+            [
+                 [
                      'route' => 'test/route',
-                     'roles' => array(
+                     'roles' => [
                          'admin',
                          'user',
-                     ),
-                 ),
-                 array(
+                     ],
+                 ],
+                 [
                      'route' => 'test2-route',
-                     'roles' => array(
+                     'roles' => [
                          'admin2',
                          'user2',
-                     ),
-                 ),
-                 array(
+                     ],
+                 ],
+                 [
                      'route' => 'test3-route',
                      'roles' => 'admin3'
-                 ),
-            ),
+                 ],
+            ],
             $this->serviceLocator
         );
 
@@ -127,15 +127,15 @@ class RouteTest extends PHPUnit_Framework_TestCase
 
         $this->assertCount(3, $rules['allow']);
         $this->assertContains(
-            array(array('admin', 'user'), 'route/test/route'),
+            [['admin', 'user'], 'route/test/route'],
             $rules['allow']
         );
         $this->assertContains(
-            array(array('admin2', 'user2'), 'route/test2-route'),
+            [['admin2', 'user2'], 'route/test2-route'],
             $rules['allow']
         );
         $this->assertContains(
-            array(array('admin3'), 'route/test3-route'),
+            [['admin3'], 'route/test3-route'],
             $rules['allow']
         );
     }
@@ -147,16 +147,16 @@ class RouteTest extends PHPUnit_Framework_TestCase
     public function testGetRulesWithAssertion()
     {
         $controller = new Route(
-            array(
-                 array(
+            [
+                 [
                      'route' => 'test/route',
-                     'roles' => array(
+                     'roles' => [
                          'admin',
                          'user',
-                     ),
+                     ],
                      'assertion' => 'test-assertion'
-                 ),
-            ),
+                 ],
+            ],
             $this->serviceLocator
         );
 
@@ -164,7 +164,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
 
         $this->assertCount(1, $rules['allow']);
         $this->assertContains(
-            array(array('admin', 'user'), 'route/test/route', null, 'test-assertion'),
+            [['admin', 'user'], 'route/test/route', null, 'test-assertion'],
             $rules['allow']
         );
     }
@@ -236,14 +236,14 @@ class RouteTest extends PHPUnit_Framework_TestCase
         $eventManager = $this->getMockBuilder('Zend\\EventManager\\EventManagerInterface')
             ->getMock();
         $application  = $this->getMockBuilder('Zend\\Mvc\\Application')
-            ->setMethods(array('getEventManager'))
+            ->setMethods(['getEventManager'])
             ->disableOriginalConstructor()
             ->getMock();
         $event        = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
-            ->setMethods(array('getRouteMatch', 'getRequest', 'getTarget', 'setError', 'setParam'))
+            ->setMethods(['getRouteMatch', 'getRequest', 'getTarget', 'setError', 'setParam'])
             ->getMock();
         $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
-            ->setMethods(array('getMatchedRouteName'))
+            ->setMethods(['getMatchedRouteName'])
             ->disableOriginalConstructor()
             ->getMock();
         $request      = $this->getMockBuilder('Zend\\Http\\Request')

@@ -56,11 +56,11 @@ class Module implements
      */
     public function getViewHelperConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'isAllowed' => Helper\IsAllowedFactory::class,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -68,11 +68,11 @@ class Module implements
      */
     public function getControllerPluginConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'isAllowed' => Plugin\IsAllowedFactory::class
-            ),
-        );
+            ],
+        ];
     }
 
     /**

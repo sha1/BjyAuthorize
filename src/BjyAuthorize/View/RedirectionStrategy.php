@@ -37,14 +37,14 @@ class RedirectionStrategy implements ListenerAggregateInterface
     /**
      * @var callable[] An array with callback functions or methods.
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * {@inheritDoc}
      */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'onDispatchError'), -5000);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError'], -5000);
     }
 
     /**
@@ -90,7 +90,7 @@ class RedirectionStrategy implements ListenerAggregateInterface
         }
 
         if (null === $url) {
-            $url = $router->assemble(array(), array('name' => $this->redirectRoute));
+            $url = $router->assemble([], ['name' => $this->redirectRoute]);
         }
 
         $response = $response ?: new Response();

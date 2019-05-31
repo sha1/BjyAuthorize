@@ -28,7 +28,7 @@ class RoleCollector implements CollectorInterface, Serializable
     /**
      * @var array|string[] collected role ids
      */
-    protected $collectedRoles = array();
+    protected $collectedRoles = [];
 
     /**
      * @var \BjyAuthorize\Provider\Identity\ProviderInterface|null

@@ -9,22 +9,22 @@
 namespace BjyAuthorizeTest\Service;
 
 use BjyAuthorize\Service\CacheKeyGeneratorFactory;
-use PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 
 /**
  * PHPUnit tests for {@see \BjyAuthorize\Service\CacheKeyGeneratorFactory}
  *
  * @author Steve Rhoades <sedonami@gmail.com>
  */
-class CacheKeyGeneratorFactoryTest extends PHPUnit_Framework_TestCase
+class CacheKeyGeneratorFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\CacheKeyGeneratorFactory::createService
      */
     public function testCreateServiceReturnsDefaultCallable()
     {
-        $serviceLocator = $this->getMock('Zend\\ServiceManager\\ServiceLocatorInterface');
-        $config         = array();
+        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $config         = [];
 
         $serviceLocator
             ->expects($this->any())
@@ -44,10 +44,10 @@ class CacheKeyGeneratorFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateServiceReturnsCacheKeyGeneratorCallable()
     {
-        $serviceLocator = $this->getMock('Zend\\ServiceManager\\ServiceLocatorInterface');
-        $config         = array(
+        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $config         = [
             'cache_key' => 'some_new_value'
-        );
+        ];
 
         $serviceLocator
             ->expects($this->any())
