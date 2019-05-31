@@ -1,4 +1,4 @@
-# BjyAuthorize - Acl security for ZF2
+# BjyAuthorize - Acl security for ZF3
 
 [![Build Status](https://travis-ci.org/kokspflanze/BjyAuthorize.png?branch=master)](https://travis-ci.org/kokspflanze/BjyAuthorize)
 [![Total Downloads](https://poser.pugx.org/kokspflanze/bjy-authorize/downloads.png)](https://packagist.org/packages/kokspflanze/bjy-authorize)
@@ -8,6 +8,12 @@
 This module is designed to provide a facade for `Zend\Permissions\Acl` that will
 ease its usage with modules and applications. By default, it provides simple
 setup via config files or by using `Zend\Db` or Doctrine ORM/ODM (via ZfcUserDoctrineORM).
+
+## Information
+
+this is a fork of [bjyoungblood/BjyAuthorize](https://github.com/bjyoungblood/BjyAuthorize).
+I added ZF3 support, so the module works with Zend Framework 2 and 3.
+If you found a bug, please report it, just pm me in [gitter](https://gitter.im/kokspflanze) or open a PullRequest.
 
 ## What does BjyAuthorize do?
 
@@ -35,8 +41,7 @@ And here's how it would look like with BjyAuthorize enabled:
 The suggested installation method is via [composer](http://getcomposer.org/):
 
 ```sh
-php composer.phar require bjyoungblood/bjy-authorize:1.4.*
-php composer.phar require zf-commons/zfc-user:0.1.*
+php composer.phar require kokspflanze/bjy-authorize
 ```
 
 ## Configuration
