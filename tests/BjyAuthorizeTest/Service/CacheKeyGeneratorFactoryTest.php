@@ -16,7 +16,7 @@ use \PHPUnit\Framework\TestCase;
  *
  * @author Steve Rhoades <sedonami@gmail.com>
  */
-class CacheKeyGeneratorFactoryTest extends \PHPUnit\Framework\TestCase
+class CacheKeyGeneratorFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\CacheKeyGeneratorFactory::createService

@@ -17,7 +17,7 @@ use Zend\ServiceManager\ServiceManager;
  *
  * @author Christian Bergau <cbergau86@gmail.com>
  */
-class AuthorizeTest extends \PHPUnit\Framework\TestCase
+class AuthorizeTest extends TestCase
 {
     /** @var  ServiceManager */
     protected $serviceLocator;

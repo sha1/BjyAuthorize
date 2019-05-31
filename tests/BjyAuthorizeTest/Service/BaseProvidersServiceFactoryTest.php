@@ -17,7 +17,7 @@ use \PHPUnit\Framework\TestCase;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class BaseProvidersServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class BaseProvidersServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\BaseProvidersServiceFactory::createService

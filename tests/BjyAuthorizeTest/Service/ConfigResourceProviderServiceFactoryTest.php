@@ -18,7 +18,7 @@ use BjyAuthorize\Service\ConfigResourceProviderServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ConfigResourceProviderServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class ConfigResourceProviderServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\ConfigResourceProviderServiceFactory::createService

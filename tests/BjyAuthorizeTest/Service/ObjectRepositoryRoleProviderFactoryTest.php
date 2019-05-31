@@ -16,7 +16,7 @@ use BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory;
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class ObjectRepositoryRoleProviderFactoryTest extends \PHPUnit\Framework\TestCase
+class ObjectRepositoryRoleProviderFactoryTest extends TestCase
 {
     private $locator;
     private $entityManager;

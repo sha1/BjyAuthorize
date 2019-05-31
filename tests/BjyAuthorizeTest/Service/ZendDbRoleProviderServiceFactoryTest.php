@@ -18,7 +18,7 @@ use BjyAuthorize\Service\ZendDbRoleProviderServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ZendDbRoleProviderServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class ZendDbRoleProviderServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\ZendDbRoleProviderServiceFactory::createService

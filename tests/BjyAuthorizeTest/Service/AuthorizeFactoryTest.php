@@ -17,7 +17,7 @@ use Zend\ServiceManager\ServiceManager;
  *
  * @author Christian Bergau <cbergau86@gmail.com>
  */
-class AuthorizeFactoryTest extends \PHPUnit\Framework\TestCase
+class AuthorizeFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\AuthorizeFactory::createService

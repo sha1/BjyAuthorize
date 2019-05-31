@@ -18,7 +18,7 @@ use BjyAuthorize\Service\RouteGuardServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RouteGuardServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class RouteGuardServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\RouteGuardServiceFactory::createService

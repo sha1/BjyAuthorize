@@ -18,7 +18,7 @@ use BjyAuthorize\Service\ConfigRoleProviderServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ConfigRoleProviderServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class ConfigRoleProviderServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\ConfigRoleProviderServiceFactory::createService

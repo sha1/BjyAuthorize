@@ -18,7 +18,7 @@ use \PHPUnit\Framework\TestCase;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ConfigRuleProviderServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class ConfigRuleProviderServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\ConfigRuleProviderServiceFactory::createService

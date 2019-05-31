@@ -18,7 +18,7 @@ use BjyAuthorize\Service\ControllerGuardServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ControllerGuardServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class ControllerGuardServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\ControllerGuardServiceFactory::createService

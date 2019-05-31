@@ -18,7 +18,7 @@ use BjyAuthorize\Service\AuthenticationIdentityProviderServiceFactory;
  *
  * @author Ingo Walz <ingo.walz@googlemail.com>
  */
-class AuthenticationIdentityProviderServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class AuthenticationIdentityProviderServiceFactoryTest extends TestCase
 {
     /**
      * @covers BjyAuthorize\Service\AuthenticationIdentityProviderServiceFactory::createService

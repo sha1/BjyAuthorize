@@ -18,7 +18,7 @@ use BjyAuthorize\Service\ConfigServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ConfigServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class ConfigServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\ConfigServiceFactory::createService

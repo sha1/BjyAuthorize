@@ -18,7 +18,7 @@ use BjyAuthorize\Service\RoleCollectorServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RoleCollectorServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class RoleCollectorServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\RoleCollectorServiceFactory::createService

@@ -16,7 +16,7 @@ use BjyAuthorize\Controller\Plugin\IsAllowed;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class IsAllowedTest extends \PHPUnit\Framework\TestCase
+class IsAllowedTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Controller\Plugin\IsAllowed

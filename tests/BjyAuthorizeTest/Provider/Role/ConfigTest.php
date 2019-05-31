@@ -16,7 +16,7 @@ use BjyAuthorize\Provider\Role\Config;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ConfigTest extends \PHPUnit\Framework\TestCase
+class ConfigTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Provider\Role\Config::__construct

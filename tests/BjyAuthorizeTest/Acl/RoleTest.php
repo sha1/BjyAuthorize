@@ -17,7 +17,7 @@ use stdClass;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RoleTest extends \PHPUnit\Framework\TestCase
+class RoleTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Acl\Role::__construct

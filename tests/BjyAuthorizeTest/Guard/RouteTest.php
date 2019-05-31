@@ -17,7 +17,7 @@ use Zend\Mvc\MvcEvent;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RouteTest extends \PHPUnit\Framework\TestCase
+class RouteTest extends TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject

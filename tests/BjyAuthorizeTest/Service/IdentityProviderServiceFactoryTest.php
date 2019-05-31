@@ -18,7 +18,7 @@ use BjyAuthorize\Service\IdentityProviderServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class IdentityProviderServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class IdentityProviderServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\IdentityProviderServiceFactory::createService

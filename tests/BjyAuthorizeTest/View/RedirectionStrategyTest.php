@@ -19,7 +19,7 @@ use Zend\Mvc\Application;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RedirectionStrategyTest extends \PHPUnit\Framework\TestCase
+class RedirectionStrategyTest extends TestCase
 {
     /**
      * @var \BjyAuthorize\View\RedirectionStrategy

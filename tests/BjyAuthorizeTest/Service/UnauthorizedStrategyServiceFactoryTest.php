@@ -18,7 +18,7 @@ use BjyAuthorize\Service\UnauthorizedStrategyServiceFactory;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class UnauthorizedStrategyServiceFactoryTest extends \PHPUnit\Framework\TestCase
+class UnauthorizedStrategyServiceFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\UnauthorizedStrategyServiceFactory::createService

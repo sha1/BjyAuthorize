@@ -18,7 +18,7 @@ use BjyAuthorize\Service\AuthorizeAwareServiceInitializer;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class AuthorizeAwareServiceInitializerTest extends \PHPUnit\Framework\TestCase
+class AuthorizeAwareServiceInitializerTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

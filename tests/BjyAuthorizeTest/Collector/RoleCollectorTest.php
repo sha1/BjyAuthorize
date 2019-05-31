@@ -16,7 +16,7 @@ use \PHPUnit\Framework\TestCase;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class RoleCollectorTest extends \PHPUnit\Framework\TestCase
+class RoleCollectorTest extends TestCase
 {
     /**
      * @var \BjyAuthorize\Collector\RoleCollector

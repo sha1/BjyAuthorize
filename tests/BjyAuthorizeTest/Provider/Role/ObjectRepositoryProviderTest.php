@@ -17,7 +17,7 @@ use BjyAuthorize\Provider\Role\ObjectRepositoryProvider;
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class ObjectRepositoryProviderTest extends \PHPUnit\Framework\TestCase
+class ObjectRepositoryProviderTest extends TestCase
 {
     /**
      * @var \BjyAuthorize\Provider\Role\ObjectRepositoryProvider

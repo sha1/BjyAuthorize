@@ -20,7 +20,7 @@ use Zend\View\Model\ModelInterface;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class UnauthorizedStrategyTest extends \PHPUnit\Framework\TestCase
+class UnauthorizedStrategyTest extends TestCase
 {
     /**
      * @var UnauthorizedStrategy

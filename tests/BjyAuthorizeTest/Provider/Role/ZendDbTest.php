@@ -17,7 +17,7 @@ use \PHPUnit\Framework\TestCase;
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class ZendDbTest extends \PHPUnit\Framework\TestCase
+class ZendDbTest extends TestCase
 {
     /**
      * @var \BjyAuthorize\Provider\Role\ObjectRepositoryProvider

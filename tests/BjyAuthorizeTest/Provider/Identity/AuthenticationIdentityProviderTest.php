@@ -16,7 +16,7 @@ use BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider;
  *
  * @author Ingo Walz <ingo.walz@googlemail.com>
  */
-class AuthenticationIdentityProviderTest extends \PHPUnit\Framework\TestCase
+class AuthenticationIdentityProviderTest extends TestCase
 {
     /**
      * @var \Zend\Authentication\AuthenticationService|\PHPUnit_Framework_MockObject_MockObject

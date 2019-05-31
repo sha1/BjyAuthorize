@@ -16,7 +16,7 @@ use BjyAuthorize\Provider\Identity\ZfcUserZendDb;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ZfcUserZendDbTest extends \PHPUnit\Framework\TestCase
+class ZfcUserZendDbTest extends TestCase
 {
     /**
      * @var \Zend\Authentication\AuthenticationService|\PHPUnit_Framework_MockObject_MockObject

@@ -16,7 +16,7 @@ use \PHPUnit\Framework\TestCase;
  *
  * @author Christian Bergau <cbergau86@gmail.com>
  */
-class CacheFactoryTest extends \PHPUnit\Framework\TestCase
+class CacheFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\CacheFactory::createService

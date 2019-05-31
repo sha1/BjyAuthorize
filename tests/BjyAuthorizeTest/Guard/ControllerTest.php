@@ -18,7 +18,7 @@ use Zend\Mvc\MvcEvent;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ControllerTest extends \PHPUnit\Framework\TestCase
+class ControllerTest extends TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
