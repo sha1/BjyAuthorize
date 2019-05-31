@@ -9,7 +9,7 @@
 namespace BjyAuthorizeTest\Service;
 
 use BjyAuthorize\Service\Authorize;
-use PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 use Zend\ServiceManager\ServiceManager;
 
 /**
@@ -17,7 +17,7 @@ use Zend\ServiceManager\ServiceManager;
  *
  * @author Christian Bergau <cbergau86@gmail.com>
  */
-class AuthorizeTest extends PHPUnit_Framework_TestCase
+class AuthorizeTest extends TestCase
 {
     /** @var  ServiceManager */
     protected $serviceLocator;
@@ -35,25 +35,25 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
         $serviceLocator->setService('BjyAuthorize\Cache', $cache);
         $serviceLocator->setService(
             'BjyAuthorize\Provider\Identity\ProviderInterface',
-            $this->getMock('BjyAuthorize\Provider\Identity\ProviderInterface')
+            $this->createMock('BjyAuthorize\Provider\Identity\ProviderInterface')
         );
         $serviceLocator->setService(
             'BjyAuthorize\RoleProviders',
-            $this->getMock('BjyAuthorize\Service\RoleProvidersServiceFactory')
+            $this->createMock('BjyAuthorize\Service\RoleProvidersServiceFactory')
         );
 
         $serviceLocator->setService(
             'BjyAuthorize\ResourceProviders',
-            $this->getMock('BjyAuthorize\Service\ResourceProvidersServiceFactory')
+            $this->createMock('BjyAuthorize\Service\ResourceProvidersServiceFactory')
         );
 
         $serviceLocator->setService(
             'BjyAuthorize\RuleProviders',
-            $this->getMock('BjyAuthorize\Service\RuleProvidersServiceFactory')
+            $this->createMock('BjyAuthorize\Service\RuleProvidersServiceFactory')
         );
         $serviceLocator->setService(
             'BjyAuthorize\Guards',
-            $this->getMock('BjyAuthorize\Service\GuardsServiceFactory')
+            $this->createMock('BjyAuthorize\Service\GuardsServiceFactory')
         );
         $serviceLocator->setService(
             'BjyAuthorize\CacheKeyGenerator',
@@ -69,7 +69,7 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadLoadsAclFromCacheAndDoesNotBuildANewAclObject()
     {
-        $acl = $this->getMock('Zend\Permissions\Acl\Acl');
+        $acl = $this->createMock('Zend\Permissions\Acl\Acl');
 
         $cache = $this->getMockBuilder('Zend\Cache\Storage\Adapter\Filesystem')
             ->disableOriginalConstructor()
@@ -91,7 +91,7 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
         $serviceManager = new ServiceManager();
         $serviceManager->setService(
             'BjyAuthorize\Provider\Identity\ProviderInterface',
-            $this->getMock('BjyAuthorize\Provider\Identity\ProviderInterface')
+            $this->createMock('BjyAuthorize\Provider\Identity\ProviderInterface')
         );
         $serviceManager->setService('BjyAuthorize\Cache', $cache);
         $serviceManager->setService(
@@ -100,7 +100,7 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
                 return 'bjyauthorize-acl';
             }
         );
-        $authorize = new Authorize(array('cache_key' => 'bjyauthorize-acl'), $serviceManager);
+        $authorize = new Authorize(['cache_key' => 'bjyauthorize-acl'], $serviceManager);
         $authorize->load();
 
         $this->assertSame($acl, $authorize->getAcl());
@@ -122,23 +122,23 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
         $serviceLocator->setService('BjyAuthorize\Cache', $cache);
         $serviceLocator->setService(
             'BjyAuthorize\Provider\Identity\ProviderInterface',
-            $this->getMock('BjyAuthorize\Provider\Identity\ProviderInterface')
+            $this->createMock('BjyAuthorize\Provider\Identity\ProviderInterface')
         );
         $serviceLocator->setService(
             'BjyAuthorize\RoleProviders',
-            $this->getMock('BjyAuthorize\Service\RoleProvidersServiceFactory')
+            $this->createMock('BjyAuthorize\Service\RoleProvidersServiceFactory')
         );
         $serviceLocator->setService(
             'BjyAuthorize\ResourceProviders',
-            $this->getMock('BjyAuthorize\Service\ResourceProvidersServiceFactory')
+            $this->createMock('BjyAuthorize\Service\ResourceProvidersServiceFactory')
         );
         $serviceLocator->setService(
             'BjyAuthorize\RuleProviders',
-            $this->getMock('BjyAuthorize\Service\RuleProvidersServiceFactory')
+            $this->createMock('BjyAuthorize\Service\RuleProvidersServiceFactory')
         );
         $serviceLocator->setService(
             'BjyAuthorize\Guards',
-            $this->getMock('BjyAuthorize\Service\GuardsServiceFactory')
+            $this->createMock('BjyAuthorize\Service\GuardsServiceFactory')
         );
         $serviceLocator->setService(
             'BjyAuthorize\CacheKeyGenerator',
@@ -146,7 +146,7 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
                 return 'acl';
             }
         );
-        $authorize = new Authorize(array('cache_key' => 'acl'), $serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $serviceLocator);
         $authorize->load();
     }
 
@@ -161,7 +161,7 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
 
         $resourceProviderMock = $this->getMockBuilder('BjyAuthorize\Provider\Resource\Config')
             ->disableOriginalConstructor()
-            ->setMethods(array('getResources'))
+            ->setMethods(['getResources'])
             ->getMock();
 
         $resourceProviderMock
@@ -169,14 +169,14 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
             ->method('getResources')
             ->will(
                 $this->returnValue(
-                    array(new \Zend\Permissions\Acl\Resource\GenericResource('test'))
+                    [new \Zend\Permissions\Acl\Resource\GenericResource('test')]
                 )
             );
 
         $serviceLocator->setService('BjyAuthorize\Provider\Resource\Config', $resourceProviderMock);
-        $serviceLocator->setService('BjyAuthorize\ResourceProviders', array($resourceProviderMock));
+        $serviceLocator->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
 
-        $authorize = new Authorize(array('cache_key' => 'acl'), $this->serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceLocator);
         $authorize->load();
 
         $acl = $authorize->getAcl();
@@ -201,14 +201,14 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
             ->method('getResources')
             ->will(
                 $this->returnValue(
-                    new \Zend\Stdlib\ArrayObject(array('test'))
+                    new \Zend\Stdlib\ArrayObject(['test'])
                 )
             );
 
         $serviceLocator->setService('BjyAuthorize\Provider\Resource\Config', $resourceProviderMock);
-        $serviceLocator->setService('BjyAuthorize\ResourceProviders', array($resourceProviderMock));
+        $serviceLocator->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
 
-        $authorize = new Authorize(array('cache_key' => 'acl'), $serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $serviceLocator);
 
         $acl = $authorize->getAcl();
 
@@ -221,7 +221,7 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
      */
     public function testCanAddNonTraversableResourceToLoadResourceThrowsInvalidArgumentException()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
 
         $serviceLocator = $this->serviceLocator;
         $serviceLocator->setAllowOverride(true);
@@ -240,9 +240,9 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
             );
 
         $serviceLocator->setService('BjyAuthorize\Provider\Resource\Config', $resourceProviderMock);
-        $serviceLocator->setService('BjyAuthorize\ResourceProviders', array($resourceProviderMock));
+        $serviceLocator->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
 
-        $authorize = new Authorize(array('cache_key' => 'acl'), $this->serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceLocator);
         $authorize->load();
     }
 
@@ -263,14 +263,14 @@ class AuthorizeTest extends PHPUnit_Framework_TestCase
             ->method('getRoles')
             ->will(
                 $this->returnValue(
-                    new \Zend\Stdlib\ArrayObject(array(new \BjyAuthorize\Acl\Role('test')))
+                    new \Zend\Stdlib\ArrayObject([new \BjyAuthorize\Acl\Role('test')])
                 )
             );
 
         $serviceLocator->setService('BjyAuthorize\Provider\Role\Config', $roleProviderMock);
-        $serviceLocator->setService('BjyAuthorize\RoleProviders', array($roleProviderMock));
+        $serviceLocator->setService('BjyAuthorize\RoleProviders', [$roleProviderMock]);
 
-        $authorize = new Authorize(array('cache_key' => 'acl'), $this->serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceLocator);
         $authorize->load();
 
         $acl = $authorize->getAcl();

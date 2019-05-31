@@ -39,7 +39,7 @@ class ObjectRepositoryProvider implements ProviderInterface
     public function getRoles()
     {
         $result = $this->objectRepository->findAll();
-        $roles = array();
+        $roles = [];
 
         // Pass One: Build each object
         foreach ($result as $role) {

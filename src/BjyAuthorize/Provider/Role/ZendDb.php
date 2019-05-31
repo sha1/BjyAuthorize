@@ -81,8 +81,8 @@ class ZendDb implements ProviderInterface
         $sql->from($this->tableName);
 
         /* @var $roles Role[] */
-        $roles = array();
-        $indexedRows = array();
+        $roles = [];
+        $indexedRows = [];
         $rowset = $tableGateway->selectWith($sql);
 
         // Pass 1: collect all rows and index them by PK

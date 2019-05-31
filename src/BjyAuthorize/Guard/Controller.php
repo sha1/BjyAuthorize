@@ -28,8 +28,8 @@ class Controller extends AbstractGuard
 
     protected function extractResourcesFromRule(array $rule)
     {
-        $results = array();
-        $rule['action'] = isset($rule['action']) ? (array)$rule['action'] : array(null);
+        $results = [];
+        $rule['action'] = isset($rule['action']) ? (array)$rule['action'] : [null];
 
         foreach ((array)$rule['controller'] as $controller) {
             foreach ($rule['action'] as $action) {
@@ -45,7 +45,7 @@ class Controller extends AbstractGuard
      */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, array($this, 'onDispatch'), -1000);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onDispatch'], -1000);
     }
 
     /**

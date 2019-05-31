@@ -29,7 +29,7 @@ abstract class BaseProvidersServiceFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('BjyAuthorize\Config');
-        $providers = array();
+        $providers = [];
 
         foreach ($config[static::PROVIDER_SETTING] as $providerName => $providerConfig) {
             if ($container->has($providerName)) {

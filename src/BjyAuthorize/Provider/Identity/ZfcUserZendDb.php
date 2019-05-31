@@ -59,7 +59,7 @@ class ZfcUserZendDb implements ProviderInterface
         $authService = $this->userService->getAuthService();
 
         if (!$authService->hasIdentity()) {
-            return array($this->getDefaultRole());
+            return [$this->getDefaultRole()];
         }
 
         // get roles associated with the logged in user
@@ -68,11 +68,11 @@ class ZfcUserZendDb implements ProviderInterface
         $sql->from($this->tableName);
         // @todo these fields should eventually be configurable
         $sql->join('user_role', 'user_role.id = ' . $this->tableName . '.role_id');
-        $sql->where(array('user_id' => $authService->getIdentity()->getId()));
+        $sql->where(['user_id' => $authService->getIdentity()->getId()]);
 
         $results = $this->tableGateway->selectWith($sql);
 
-        $roles = array();
+        $roles = [];
 
         foreach ($results as $role) {
             $roles[] = $role['role_id'];

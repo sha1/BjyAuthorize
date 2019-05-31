@@ -35,7 +35,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
     /**
      * @var callable[] An array with callback functions or methods.
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * @param string $template name of the template to use on unauthorized requests
@@ -50,7 +50,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'onDispatchError'), -5000);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'onDispatchError'], -5000);
     }
 
     /**
@@ -101,10 +101,10 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
         }
 
         // Common view variables
-        $viewVariables = array(
+        $viewVariables = [
             'error' => $event->getParam('error'),
             'identity' => $event->getParam('identity'),
-        );
+        ];
 
         switch ($event->getError()) {
             case Controller::ERROR:

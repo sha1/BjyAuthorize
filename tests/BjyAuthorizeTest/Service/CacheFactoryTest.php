@@ -9,31 +9,31 @@
 namespace BjyAuthorizeTest\Service;
 
 use BjyAuthorize\Service\CacheFactory;
-use PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 
 /**
  * PHPUnit tests for {@see \BjyAuthorize\Service\CacheFactory}
  *
  * @author Christian Bergau <cbergau86@gmail.com>
  */
-class CacheFactoryTest extends PHPUnit_Framework_TestCase
+class CacheFactoryTest extends TestCase
 {
     /**
      * @covers \BjyAuthorize\Service\CacheFactory::createService
      */
     public function testCreateService()
     {
-        $serviceLocator = $this->getMock('Zend\\ServiceManager\\ServiceLocatorInterface');
-        $config         = array(
-            'cache_options' => array(
-                'adapter'   => array(
+        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $config         = [
+            'cache_options' => [
+                'adapter'   => [
                     'name' => 'memory',
-                ),
-                'plugins'   => array(
+                ],
+                'plugins'   => [
                     'serializer',
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         $serviceLocator
             ->expects($this->any())

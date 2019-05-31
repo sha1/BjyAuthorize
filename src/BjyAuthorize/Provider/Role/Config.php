@@ -20,14 +20,14 @@ class Config implements ProviderInterface
     /**
      * @var \Zend\Permissions\Acl\Role\RoleInterface[]
      */
-    protected $roles = array();
+    protected $roles = [];
 
     /**
      * @param array $config
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
-        $roles = array();
+        $roles = [];
 
         foreach ($config as $key => $value) {
             if (is_numeric($key)) {
@@ -47,21 +47,21 @@ class Config implements ProviderInterface
      *
      * @return array
      */
-    protected function loadRole($name, $options = array(), $parent = null)
+    protected function loadRole($name, $options = [], $parent = null)
     {
         if (isset($options['children']) && count($options['children']) > 0) {
             $children = $options['children'];
         } else {
-            $children = array();
+            $children = [];
         }
 
-        $roles = array();
+        $roles = [];
         $role = new Role($name, $parent);
         $roles[] = $role;
 
         foreach ($children as $key => $value) {
             if (is_numeric($key)) {
-                $roles = array_merge($roles, $this->loadRole($value, array(), $role));
+                $roles = array_merge($roles, $this->loadRole($value, [], $role));
             } else {
                 $roles = array_merge($roles, $this->loadRole($key, $value, $role));
             }

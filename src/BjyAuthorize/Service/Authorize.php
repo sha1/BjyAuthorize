@@ -40,17 +40,17 @@ class Authorize
     /**
      * @var RoleProvider[]
      */
-    protected $roleProviders = array();
+    protected $roleProviders = [];
 
     /**
      * @var ResourceProvider[]
      */
-    protected $resourceProviders = array();
+    protected $resourceProviders = [];
 
     /**
      * @var RuleProvider[]
      */
-    protected $ruleProviders = array();
+    protected $ruleProviders = [];
 
     /**
      * @var IdentityProvider
@@ -60,7 +60,7 @@ class Authorize
     /**
      * @var GuardInterface[]
      */
-    protected $guards = array();
+    protected $guards = [];
 
     /**
      * @var \Closure|null
@@ -290,7 +290,7 @@ class Authorize
     protected function addRoles($roles)
     {
         if (!is_array($roles) && !($roles instanceof \Traversable)) {
-            $roles = array($roles);
+            $roles = [$roles];
         }
 
         /* @var $role Role */
@@ -300,7 +300,7 @@ class Authorize
             }
 
             if ($role->getParent() !== null) {
-                $this->addRoles(array($role->getParent()));
+                $this->addRoles([$role->getParent()]);
                 $this->acl->addRole($role, $role->getParent());
             } elseif (!$this->acl->hasRole($role)) {
                 $this->acl->addRole($role);
