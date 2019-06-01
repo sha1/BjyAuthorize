@@ -9,6 +9,7 @@
 namespace BjyAuthorize\Guard;
 
 use BjyAuthorize\Exception\UnAuthorizedException;
+use Zend\Console\Request as ConsoleRequest;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
@@ -83,7 +84,8 @@ class Controller extends AbstractGuard
         $request = $event->getRequest();
         $method = $request instanceof HttpRequest ? strtolower($request->getMethod()) : null;
 
-        $authorized = $service->isAllowed($this->getResourceName($controller))
+        $authorized = (class_exists(ConsoleRequest::class) && $event->getRequest() instanceof ConsoleRequest)
+            || $service->isAllowed($this->getResourceName($controller))
             || $service->isAllowed($this->getResourceName($controller, $action))
             || ($method && $service->isAllowed($this->getResourceName($controller, $method)));
 

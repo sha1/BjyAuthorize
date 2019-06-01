@@ -9,6 +9,7 @@
 namespace BjyAuthorize\Guard;
 
 use BjyAuthorize\Exception\UnAuthorizedException;
+use Zend\Console\Request as ConsoleRequest;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 
@@ -53,7 +54,7 @@ class Route extends AbstractGuard
         $match = $event->getRouteMatch();
         $routeName = $match->getMatchedRouteName();
 
-        if ($service->isAllowed('route/' . $routeName)) {
+        if ($service->isAllowed('route/' . $routeName) || (class_exists(ConsoleRequest::class) && $event->getRequest() instanceof ConsoleRequest)) {
             return;
         }
 

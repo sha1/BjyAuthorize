@@ -11,6 +11,7 @@ namespace BjyAuthorizeTest\Guard;
 use BjyAuthorize\Exception\UnAuthorizedException;
 use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Guard\Controller;
+use Zend\Console\Request;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -239,10 +240,10 @@ class ControllerTest extends TestCase
             ->will($this->returnValue(false));
         $event->expects($this->once())->method('setError')->with(Controller::ERROR);
 
-        $event->expects($this->at(4))->method('setParam')->with('identity', 'admin');
-        $event->expects($this->at(5))->method('setParam')->with('controller', 'test-controller');
-        $event->expects($this->at(6))->method('setParam')->with('action', 'test-action');
-        $event->expects($this->at(7))->method('setParam')->with(
+        $event->expects($this->at(5))->method('setParam')->with('identity', 'admin');
+        $event->expects($this->at(6))->method('setParam')->with('controller', 'test-controller');
+        $event->expects($this->at(7))->method('setParam')->with('action', 'test-action');
+        $event->expects($this->at(8))->method('setParam')->with(
             'exception',
             $this->isInstanceOf(UnAuthorizedException::class)
         );
@@ -257,6 +258,27 @@ class ControllerTest extends TestCase
             ->method('trigger')
             ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, [])
             ->willReturn($responseCollection);
+
+        $this->assertNull($this->controllerGuard->onDispatch($event), 'Does not stop event propagation');
+    }
+
+    /**
+     * @covers \BjyAuthorize\Guard\Controller::onDispatch
+     */
+    public function testOnDispatchWithInvalidResourceConsole()
+    {
+        $event = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
+            ->setMethods(['getRequest', 'getRouteMatch'])
+            ->getMock();
+        $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
+            ->setMethods(['getParam'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $event->method('getRouteMatch')->willReturn($routeMatch);
+        $event->method('getRequest')->willReturn($request);
 
         $this->assertNull($this->controllerGuard->onDispatch($event), 'Does not stop event propagation');
     }
