@@ -10,6 +10,7 @@ namespace BjyAuthorizeTest\Guard;
 
 use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Guard\Route;
+use Zend\Console\Request;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -205,9 +206,9 @@ class RouteTest extends TestCase
             ->will($this->returnValue(false));
         $event->expects($this->once())->method('setError')->with(Route::ERROR);
 
-        $event->expects($this->at(3))->method('setParam')->with('route', 'test-route');
-        $event->expects($this->at(4))->method('setParam')->with('identity', 'admin');
-        $event->expects($this->at(5))->method('setParam')->with(
+        $event->expects($this->at(4))->method('setParam')->with('route', 'test-route');
+        $event->expects($this->at(5))->method('setParam')->with('identity', 'admin');
+        $event->expects($this->at(6))->method('setParam')->with(
             'exception',
             $this->isInstanceOf('BjyAuthorize\Exception\UnAuthorizedException')
         );
@@ -222,6 +223,27 @@ class RouteTest extends TestCase
             ->method('trigger')
             ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, $event->getParams())
             ->willReturn($responseCollection);
+
+        $this->assertNull($this->routeGuard->onRoute($event), 'Does not stop event propagation');
+    }
+
+    /**
+     * @covers \BjyAuthorize\Guard\Controller::onDispatch
+     */
+    public function testOnDispatchWithInvalidResourceConsole()
+    {
+        $event = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
+            ->setMethods(['getRequest', 'getRouteMatch'])
+            ->getMock();
+        $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
+            ->setMethods(['getMatchedRouteName'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request = $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $event->method('getRouteMatch')->willReturn($routeMatch);
+        $event->method('getRequest')->willReturn($request);
 
         $this->assertNull($this->routeGuard->onRoute($event), 'Does not stop event propagation');
     }
