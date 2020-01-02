@@ -26,7 +26,7 @@ class ConfigResourceProviderServiceFactoryTest extends TestCase
     public function testCreateService()
     {
         $factory          = new ConfigResourceProviderServiceFactory();
-        $serviceLocator   = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $config           = [
             'resource_providers' => [
                 'BjyAuthorize\Provider\Resource\Config' => [],

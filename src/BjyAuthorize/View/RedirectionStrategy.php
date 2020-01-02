@@ -9,11 +9,11 @@ namespace BjyAuthorize\View;
 use BjyAuthorize\Exception\UnAuthorizedException;
 use BjyAuthorize\Guard\Controller;
 use BjyAuthorize\Guard\Route;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\Http\Response;
-use Zend\Mvc\Application;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\Http\Response;
+use Laminas\Mvc\Application;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Dispatch error handler, catches exceptions related with authorization and
@@ -62,7 +62,7 @@ class RedirectionStrategy implements ListenerAggregateInterface
     /**
      * Handles redirects in case of dispatch errors caused by unauthorized access
      *
-     * @param \Zend\Mvc\MvcEvent $event
+     * @param \Laminas\Mvc\MvcEvent $event
      */
     public function onDispatchError(MvcEvent $event)
     {

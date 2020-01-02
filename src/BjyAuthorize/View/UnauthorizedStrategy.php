@@ -11,13 +11,13 @@ namespace BjyAuthorize\View;
 use BjyAuthorize\Exception\UnAuthorizedException;
 use BjyAuthorize\Guard\Controller;
 use BjyAuthorize\Guard\Route;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\Http\Response as HttpResponse;
-use Zend\Mvc\Application;
-use Zend\Mvc\MvcEvent;
-use Zend\Stdlib\ResponseInterface as Response;
-use Zend\View\Model\ViewModel;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Mvc\Application;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Stdlib\ResponseInterface as Response;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Dispatch error handler, catches exceptions related with authorization and

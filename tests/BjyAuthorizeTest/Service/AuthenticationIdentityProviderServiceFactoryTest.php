@@ -33,8 +33,8 @@ class AuthenticationIdentityProviderServiceFactoryTest extends TestCase
         ];
 
         $user           = $this->getMockBuilder('ZfcUser\\Service\\User')->setMethods(['getAuthService'])->getMock();
-        $auth           = $this->createMock('Zend\\Authentication\\AuthenticationService');
-        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $auth           = $this->createMock('Laminas\\Authentication\\AuthenticationService');
+        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
 
         $user->expects($this->once())->method('getAuthService')->will($this->returnValue($auth));
         $serviceLocator

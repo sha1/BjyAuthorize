@@ -12,7 +12,7 @@ namespace BjyAuthorize\Guard;
 use BjyAuthorize\Provider\Resource\ProviderInterface as ResourceProviderInterface;
 use BjyAuthorize\Provider\Rule\ProviderInterface as RuleProviderInterface;
 use Interop\Container\ContainerInterface;
-use Zend\EventManager\AbstractListenerAggregate;
+use Laminas\EventManager\AbstractListenerAggregate;
 
 abstract class AbstractGuard extends AbstractListenerAggregate implements
     GuardInterface,

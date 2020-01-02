@@ -23,7 +23,7 @@ class CacheFactoryTest extends TestCase
      */
     public function testCreateService()
     {
-        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $config         = [
             'cache_options' => [
                 'adapter'   => [
@@ -43,6 +43,6 @@ class CacheFactoryTest extends TestCase
 
         $factory = new CacheFactory();
 
-        $this->assertInstanceOf('Zend\Cache\Storage\Adapter\Memory', $factory->createService($serviceLocator));
+        $this->assertInstanceOf('Laminas\Cache\Storage\Adapter\Memory', $factory->createService($serviceLocator));
     }
 }

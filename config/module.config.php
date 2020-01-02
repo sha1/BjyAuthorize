@@ -18,15 +18,15 @@ return [
         // identity provider service name
         'identity_provider'     => 'BjyAuthorize\Provider\Identity\ZfcUserZendDb',
 
-        // Role providers to be used to load all available roles into Zend\Permissions\Acl\Acl
+        // Role providers to be used to load all available roles into Laminas\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
         'role_providers'        => [],
 
-        // Resource providers to be used to load all available resources into Zend\Permissions\Acl\Acl
+        // Resource providers to be used to load all available resources into Laminas\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
         'resource_providers'    => [],
 
-        // Rule providers to be used to load all available rules into Zend\Permissions\Acl\Acl
+        // Rule providers to be used to load all available rules into Laminas\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
         'rule_providers'        => [],
 
@@ -39,7 +39,7 @@ return [
         // Template name for the unauthorized strategy
         'template'              => 'error/403',
 
-        // cache options have to be compatible with Zend\Cache\StorageFactory::factory
+        // cache options have to be compatible with Laminas\Cache\StorageFactory::factory
         'cache_options'         => [
             'adapter'   => [
                 'name' => 'memory',
@@ -86,7 +86,7 @@ return [
             'BjyAuthorize\View\RedirectionStrategy' => 'BjyAuthorize\View\RedirectionStrategy',
         ],
         'aliases'     => [
-            'bjyauthorize_zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
+            'bjyauthorize_zend_db_adapter' => 'Laminas\Db\Adapter\Adapter',
         ],
         'initializers' => [
             'BjyAuthorize\Service\AuthorizeAwareServiceInitializer'

@@ -19,7 +19,7 @@ use BjyAuthorize\Provider\Identity\ZfcUserZendDb;
 class ZfcUserZendDbTest extends TestCase
 {
     /**
-     * @var \Zend\Authentication\AuthenticationService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\Authentication\AuthenticationService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $authService;
 
@@ -29,7 +29,7 @@ class ZfcUserZendDbTest extends TestCase
     protected $userService;
 
     /**
-     * @var \Zend\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject
      */
     private $tableGateway;
 
@@ -45,9 +45,9 @@ class ZfcUserZendDbTest extends TestCase
      */
     public function setUp()
     {
-        $this->authService  = $this->createMock('Zend\Authentication\AuthenticationService');
+        $this->authService  = $this->createMock('Laminas\Authentication\AuthenticationService');
         $this->userService  = $this->getMockBuilder('ZfcUser\Service\User')->setMethods(['getAuthService'])->getMock();
-        $this->tableGateway = $this->getMockBuilder('Zend\Db\TableGateway\TableGateway')->setMethods([])->disableOriginalConstructor()->getMock();
+        $this->tableGateway = $this->getMockBuilder('Laminas\Db\TableGateway\TableGateway')->setMethods([])->disableOriginalConstructor()->getMock();
 
         $this
             ->userService
@@ -77,7 +77,7 @@ class ZfcUserZendDbTest extends TestCase
         $this->provider->setDefaultRole('test');
         $this->assertSame('test', $this->provider->getDefaultRole());
 
-        $role = $this->createMock('Zend\\Permissions\\Acl\\Role\\RoleInterface');
+        $role = $this->createMock('Laminas\\Permissions\\Acl\\Role\\RoleInterface');
         $this->provider->setDefaultRole($role);
         $this->assertSame($role, $this->provider->getDefaultRole());
 

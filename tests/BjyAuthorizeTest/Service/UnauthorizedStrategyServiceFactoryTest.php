@@ -26,7 +26,7 @@ class UnauthorizedStrategyServiceFactoryTest extends TestCase
     public function testCreateService()
     {
         $factory          = new UnauthorizedStrategyServiceFactory();
-        $serviceLocator   = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $config           = [
             'template' => 'foo/bar',
         ];

@@ -4,9 +4,9 @@
 namespace BjyAuthorize\Controller\Plugin;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class IsAllowedFactory implements FactoryInterface
 {

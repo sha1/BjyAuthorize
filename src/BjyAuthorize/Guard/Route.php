@@ -9,13 +9,13 @@
 namespace BjyAuthorize\Guard;
 
 use BjyAuthorize\Exception\UnAuthorizedException;
-use Zend\Console\Request as ConsoleRequest;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Mvc\MvcEvent;
+use Laminas\Console\Request as ConsoleRequest;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Route Guard listener, allows checking of permissions
- * during {@see \Zend\Mvc\MvcEvent::EVENT_ROUTE}
+ * during {@see \Laminas\Mvc\MvcEvent::EVENT_ROUTE}
  *
  * @author Ben Youngblood <bx.youngblood@gmail.com>
  */
@@ -63,7 +63,7 @@ class Route extends AbstractGuard
         $event->setParam('identity', $service->getIdentity());
         $event->setParam('exception', new UnAuthorizedException('You are not authorized to access ' . $routeName));
 
-        /* @var $app \Zend\Mvc\Application */
+        /* @var $app \Laminas\Mvc\Application */
         $app = $event->getTarget();
         $eventManager = $app->getEventManager();
         $eventManager->setEventPrototype($event);

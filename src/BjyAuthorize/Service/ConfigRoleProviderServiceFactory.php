@@ -10,8 +10,8 @@ namespace BjyAuthorize\Service;
 
 use BjyAuthorize\Provider\Role\Config;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Factory responsible of instantiating {@see \BjyAuthorize\Provider\Role\Config}

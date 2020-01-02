@@ -11,7 +11,7 @@ namespace BjyAuthorize\Provider\Role;
 use BjyAuthorize\Acl\HierarchicalRoleInterface;
 use BjyAuthorize\Acl\Role;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Zend\Permissions\Acl\Role\RoleInterface;
+use Laminas\Permissions\Acl\Role\RoleInterface;
 
 /**
  * Role provider based on a {@see \Doctrine\Common\Persistence\ObjectRepository}

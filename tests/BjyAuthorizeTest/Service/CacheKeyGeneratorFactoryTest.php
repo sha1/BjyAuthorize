@@ -23,7 +23,7 @@ class CacheKeyGeneratorFactoryTest extends TestCase
      */
     public function testCreateServiceReturnsDefaultCallable()
     {
-        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $config         = [];
 
         $serviceLocator
@@ -44,7 +44,7 @@ class CacheKeyGeneratorFactoryTest extends TestCase
      */
     public function testCreateServiceReturnsCacheKeyGeneratorCallable()
     {
-        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $config         = [
             'cache_key' => 'some_new_value'
         ];

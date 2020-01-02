@@ -26,7 +26,7 @@ class ConfigRoleProviderServiceFactoryTest extends TestCase
     public function testCreateService()
     {
         $factory          = new ConfigRoleProviderServiceFactory();
-        $serviceLocator   = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $config           = [
             'role_providers' => [
                 'BjyAuthorize\Provider\Role\Config' => [],
