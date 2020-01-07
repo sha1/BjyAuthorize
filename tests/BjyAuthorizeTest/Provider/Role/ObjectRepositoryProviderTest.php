@@ -32,7 +32,7 @@ class ObjectRepositoryProviderTest extends TestCase
     /**
      * @covers \BjyAuthorize\Provider\Role\ObjectRepositoryProvider::__construct
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
         $this->provider = new ObjectRepositoryProvider($this->repository);

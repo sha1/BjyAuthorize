@@ -41,7 +41,7 @@ class ControllerTest extends TestCase
      *
      * @covers \BjyAuthorize\Guard\Controller::__construct
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

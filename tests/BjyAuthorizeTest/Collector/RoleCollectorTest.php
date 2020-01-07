@@ -33,7 +33,7 @@ class RoleCollectorTest extends TestCase
      *
      * @covers \BjyAuthorize\Collector\RoleCollector::__construct
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->identityProvider = $this->createMock('BjyAuthorize\\Provider\\Identity\\ProviderInterface');
         $this->collector        = new RoleCollector($this->identityProvider);

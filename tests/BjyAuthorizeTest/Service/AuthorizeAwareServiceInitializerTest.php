@@ -38,7 +38,7 @@ class AuthorizeAwareServiceInitializerTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->authorize   = $this->getMockBuilder('BjyAuthorize\\Service\\Authorize')->disableOriginalConstructor()->getMock();
         $this->locator     = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');

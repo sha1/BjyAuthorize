@@ -23,7 +23,7 @@ class ObjectRepositoryRoleProviderFactoryTest extends TestCase
     private $repository;
     private $factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->locator       = $this->createMock('Laminas\ServiceManager\ServiceLocatorInterface');
         $this->entityManager = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
