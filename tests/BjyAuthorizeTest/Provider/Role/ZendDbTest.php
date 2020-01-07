@@ -37,7 +37,7 @@ class ZendDbTest extends TestCase
     /**
      * @covers \BjyAuthorize\Provider\Role\ZendDb::__construct
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serviceLocator = $this->createMock('Laminas\ServiceManager\ServiceLocatorInterface');
         $this->provider       = new ZendDb([], $this->serviceLocator);

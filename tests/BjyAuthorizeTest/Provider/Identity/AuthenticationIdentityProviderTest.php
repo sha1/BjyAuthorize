@@ -33,7 +33,7 @@ class AuthenticationIdentityProviderTest extends TestCase
      *
      * @covers \BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider::__construct
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->authService = $this->createMock('Laminas\Authentication\AuthenticationService');
         $this->provider    = new AuthenticationIdentityProvider($this->authService);

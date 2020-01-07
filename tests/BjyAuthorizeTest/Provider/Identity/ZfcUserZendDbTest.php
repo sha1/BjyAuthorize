@@ -43,7 +43,7 @@ class ZfcUserZendDbTest extends TestCase
      *
      * @covers \BjyAuthorize\Provider\Identity\ZfcUserZendDb::__construct
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->authService  = $this->createMock('Laminas\Authentication\AuthenticationService');
         $this->userService  = $this->getMockBuilder('ZfcUser\Service\User')->setMethods(['getAuthService'])->getMock();

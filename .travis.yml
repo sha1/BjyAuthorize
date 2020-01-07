@@ -53,4 +53,4 @@ install:
   - COLUMNS=120 composer show
 
 script:
- - php ./vendor/bin/phpunit --configuration phpunit.xml.dist
+  - composer test

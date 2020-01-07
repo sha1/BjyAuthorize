@@ -32,7 +32,7 @@ class UnauthorizedStrategyTest extends TestCase
      *
      * @covers \BjyAuthorize\View\UnauthorizedStrategy::__construct
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

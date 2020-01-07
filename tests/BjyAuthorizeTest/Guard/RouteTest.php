@@ -40,7 +40,7 @@ class RouteTest extends TestCase
      *
      * @covers \BjyAuthorize\Guard\Route::__construct
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -22,7 +22,7 @@ class AuthorizeTest extends TestCase
     /** @var  ServiceManager */
     protected $serviceLocator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $cache = $this->getMockBuilder('Laminas\Cache\Storage\Adapter\Filesystem')
             ->disableOriginalConstructor()
