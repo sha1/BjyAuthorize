@@ -10,8 +10,8 @@ namespace BjyAuthorizeTest\Guard;
 
 use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Guard\Route;
-use Zend\Console\Request;
-use Zend\Mvc\MvcEvent;
+use Laminas\Console\Request;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Route Guard test
@@ -21,7 +21,7 @@ use Zend\Mvc\MvcEvent;
 class RouteTest extends TestCase
 {
     /**
-     * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $serviceLocator;
 
@@ -44,7 +44,7 @@ class RouteTest extends TestCase
     {
         parent::setUp();
 
-        $this->serviceLocator = $this->getMockBuilder('Zend\\ServiceManager\\ServiceLocatorInterface')
+        $this->serviceLocator = $this->getMockBuilder('Laminas\\ServiceManager\\ServiceLocatorInterface')
             ->getMock();
         $this->authorize = $authorize = $this->getMockBuilder('BjyAuthorize\\Service\\Authorize')
             ->disableOriginalConstructor()
@@ -66,7 +66,7 @@ class RouteTest extends TestCase
      */
     public function testAttachDetach()
     {
-        $eventManager = $this->createMock('Zend\\EventManager\\EventManagerInterface');
+        $eventManager = $this->createMock('Laminas\\EventManager\\EventManagerInterface');
 
         $callbackMock = $this->getMockBuilder(\stdClass::class)
             ->setMethods(['__invoke'])
@@ -213,7 +213,7 @@ class RouteTest extends TestCase
             $this->isInstanceOf('BjyAuthorize\Exception\UnAuthorizedException')
         );
 
-        $responseCollection = $this->getMockBuilder(\Zend\EventManager\ResponseCollection::class)
+        $responseCollection = $this->getMockBuilder(\Laminas\EventManager\ResponseCollection::class)
             ->getMock();
 
         $event
@@ -232,10 +232,10 @@ class RouteTest extends TestCase
      */
     public function testOnDispatchWithInvalidResourceConsole()
     {
-        $event = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
+        $event = $this->getMockBuilder('Laminas\\Mvc\\MvcEvent')
             ->setMethods(['getRequest', 'getRouteMatch'])
             ->getMock();
-        $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
+        $routeMatch   = $this->getMockBuilder('Laminas\\Mvc\\Router\\RouteMatch')
             ->setMethods(['getMatchedRouteName'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -251,24 +251,24 @@ class RouteTest extends TestCase
     /**
      * @param string|null $route
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Zend\Mvc\MvcEvent
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Mvc\MvcEvent
      */
     private function createMvcEvent($route = null)
     {
-        $eventManager = $this->getMockBuilder('Zend\\EventManager\\EventManagerInterface')
+        $eventManager = $this->getMockBuilder('Laminas\\EventManager\\EventManagerInterface')
             ->getMock();
-        $application  = $this->getMockBuilder('Zend\\Mvc\\Application')
+        $application  = $this->getMockBuilder('Laminas\\Mvc\\Application')
             ->setMethods(['getEventManager'])
             ->disableOriginalConstructor()
             ->getMock();
-        $event        = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
+        $event        = $this->getMockBuilder('Laminas\\Mvc\\MvcEvent')
             ->setMethods(['getRouteMatch', 'getRequest', 'getTarget', 'setError', 'setParam'])
             ->getMock();
-        $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
+        $routeMatch   = $this->getMockBuilder('Laminas\\Mvc\\Router\\RouteMatch')
             ->setMethods(['getMatchedRouteName'])
             ->disableOriginalConstructor()
             ->getMock();
-        $request      = $this->getMockBuilder('Zend\\Http\\Request')
+        $request      = $this->getMockBuilder('Laminas\\Http\\Request')
             ->getMock();
 
         $event->expects($this->any())->method('getRouteMatch')->will($this->returnValue($routeMatch));

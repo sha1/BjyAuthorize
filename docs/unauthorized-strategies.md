@@ -15,7 +15,7 @@ at bootstrap time:
 namespace MyApp;
 
 use BjyAuthorize\View\RedirectionStrategy;
-use Zend\EventManager\EventInterface;
+use Laminas\EventManager\EventInterface;
 
 class Module
 {

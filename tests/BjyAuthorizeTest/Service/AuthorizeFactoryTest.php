@@ -10,7 +10,7 @@ namespace BjyAuthorizeTest\Service;
 
 use BjyAuthorize\Service\AuthorizeFactory;
 use \PHPUnit\Framework\TestCase;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Test for {@see \BjyAuthorize\Service\AuthorizeFactory}

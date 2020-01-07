@@ -11,8 +11,8 @@ namespace BjyAuthorizeTest\Guard;
 use BjyAuthorize\Exception\UnAuthorizedException;
 use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Guard\Controller;
-use Zend\Console\Request;
-use Zend\Mvc\MvcEvent;
+use Laminas\Console\Request;
+use Laminas\Mvc\MvcEvent;
 
 /**
  * Controller Guard test
@@ -22,7 +22,7 @@ use Zend\Mvc\MvcEvent;
 class ControllerTest extends TestCase
 {
     /**
-     * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $serviceLocator;
 
@@ -45,7 +45,7 @@ class ControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->serviceLocator  = $locator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $this->serviceLocator  = $locator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $this->authorize = $authorize = $this->getMockBuilder('BjyAuthorize\\Service\\Authorize')->disableOriginalConstructor()->getMock();
         $this->controllerGuard = new Controller([], $this->serviceLocator);
 
@@ -63,7 +63,7 @@ class ControllerTest extends TestCase
      */
     public function testAttachDetach()
     {
-        $eventManager = $this->getMockBuilder('Zend\\EventManager\\EventManagerInterface')
+        $eventManager = $this->getMockBuilder('Laminas\\EventManager\\EventManagerInterface')
             ->getMock();
 
         $callbackMock = $this->getMockBuilder(\stdClass::class)
@@ -248,7 +248,7 @@ class ControllerTest extends TestCase
             $this->isInstanceOf(UnAuthorizedException::class)
         );
 
-        $responseCollection = $this->getMockBuilder(\Zend\EventManager\ResponseCollection::class)
+        $responseCollection = $this->getMockBuilder(\Laminas\EventManager\ResponseCollection::class)
             ->getMock();
 
         $event
@@ -267,10 +267,10 @@ class ControllerTest extends TestCase
      */
     public function testOnDispatchWithInvalidResourceConsole()
     {
-        $event = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
+        $event = $this->getMockBuilder('Laminas\\Mvc\\MvcEvent')
             ->setMethods(['getRequest', 'getRouteMatch'])
             ->getMock();
-        $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
+        $routeMatch   = $this->getMockBuilder('Laminas\\Mvc\\Router\\RouteMatch')
             ->setMethods(['getParam'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -288,24 +288,24 @@ class ControllerTest extends TestCase
      * @param string|null $action
      * @param string|null $method
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Zend\Mvc\MvcEvent
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Mvc\MvcEvent
      */
     private function createMvcEvent($controller = null, $action = null, $method = null)
     {
-        $eventManager = $this->getMockBuilder('Zend\\EventManager\\EventManagerInterface')
+        $eventManager = $this->getMockBuilder('Laminas\\EventManager\\EventManagerInterface')
             ->getMock();
-        $application  = $this->getMockBuilder('Zend\\Mvc\\Application')
+        $application  = $this->getMockBuilder('Laminas\\Mvc\\Application')
             ->setMethods(['getEventManager'])
             ->disableOriginalConstructor()
             ->getMock();
-        $event        = $this->getMockBuilder('Zend\\Mvc\\MvcEvent')
+        $event        = $this->getMockBuilder('Laminas\\Mvc\\MvcEvent')
             ->setMethods(['getTarget', 'getRouteMatch', 'getRequest', 'setError', 'setParam'])
             ->getMock();
-        $routeMatch   = $this->getMockBuilder('Zend\\Mvc\\Router\\RouteMatch')
+        $routeMatch   = $this->getMockBuilder('Laminas\\Mvc\\Router\\RouteMatch')
             ->setMethods(['getParam'])
             ->disableOriginalConstructor()
             ->getMock();
-        $request      = $this->getMockBuilder('Zend\\Http\\Request')
+        $request      = $this->getMockBuilder('Laminas\\Http\\Request')
             ->getMock();
 
         $event->expects($this->any())->method('getRouteMatch')->will($this->returnValue($routeMatch));

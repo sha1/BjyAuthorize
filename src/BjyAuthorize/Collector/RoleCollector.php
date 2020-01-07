@@ -10,8 +10,8 @@ namespace BjyAuthorize\Collector;
 
 use BjyAuthorize\Provider\Identity\ProviderInterface;
 use Serializable;
-use Zend\Mvc\MvcEvent;
-use Zend\Permissions\Acl\Role\RoleInterface;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Permissions\Acl\Role\RoleInterface;
 use ZendDeveloperTools\Collector\CollectorInterface;
 
 /**

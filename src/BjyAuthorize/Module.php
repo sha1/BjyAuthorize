@@ -12,11 +12,11 @@ use BjyAuthorize\Controller\Plugin;
 use BjyAuthorize\Guard\AbstractGuard;
 use BjyAuthorize\View\Helper;
 use BjyAuthorize\View\UnauthorizedStrategy;
-use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\BootstrapListenerInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
-use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
+use Laminas\EventManager\EventInterface;
+use Laminas\ModuleManager\Feature\BootstrapListenerInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ControllerPluginProviderInterface;
+use Laminas\ModuleManager\Feature\ViewHelperProviderInterface;
 
 /**
  * BjyAuthorize Module
@@ -34,9 +34,9 @@ class Module implements
      */
     public function onBootstrap(EventInterface $event)
     {
-        /* @var $app \Zend\Mvc\ApplicationInterface */
+        /* @var $app \Laminas\Mvc\ApplicationInterface */
         $app = $event->getTarget();
-        /* @var $sm \Zend\ServiceManager\ServiceLocatorInterface */
+        /* @var $sm \Laminas\ServiceManager\ServiceLocatorInterface */
         $serviceManager = $app->getServiceManager();
         $config = $serviceManager->get('BjyAuthorize\Config');
         /** @var UnauthorizedStrategy $strategy */

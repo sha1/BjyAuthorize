@@ -11,9 +11,9 @@ namespace BjyAuthorizeTest\View;
 use BjyAuthorize\Exception\UnAuthorizedException;
 use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\View\UnauthorizedStrategy;
-use Zend\Http\Response;
-use Zend\Mvc\Application;
-use Zend\View\Model\ModelInterface;
+use Laminas\Http\Response;
+use Laminas\Mvc\Application;
+use Laminas\View\Model\ModelInterface;
 
 /**
  * UnauthorizedStrategyTest view strategy test
@@ -45,7 +45,7 @@ class UnauthorizedStrategyTest extends TestCase
      */
     public function testAttachDetach()
     {
-        $eventManager = $this->getMockBuilder('Zend\\EventManager\\EventManagerInterface')
+        $eventManager = $this->getMockBuilder('Laminas\\EventManager\\EventManagerInterface')
             ->getMock();
 
         $callbackMock = $this->getMockBuilder(\stdClass::class)
@@ -83,8 +83,8 @@ class UnauthorizedStrategyTest extends TestCase
     public function testOnDispatchErrorWithGenericUnAuthorizedException()
     {
         $exception = $this->createMock(UnAuthorizedException::class);
-        $viewModel = $this->createMock('Zend\\View\\Model\\ModelInterface');
-        $mvcEvent  = $this->createMock('Zend\\Mvc\\MvcEvent');
+        $viewModel = $this->createMock('Laminas\\View\\Model\\ModelInterface');
+        $mvcEvent  = $this->createMock('Laminas\\Mvc\\MvcEvent');
 
         $mvcEvent->expects($this->any())->method('getError')->will($this->returnValue(Application::ERROR_EXCEPTION));
         $mvcEvent->expects($this->any())->method('getViewModel')->will($this->returnValue($viewModel));
@@ -137,8 +137,8 @@ class UnauthorizedStrategyTest extends TestCase
     public function testIgnoresUnknownExceptions()
     {
         $exception = $this->createMock(\Exception::class);
-        $viewModel = $this->createMock('Zend\\View\\Model\\ModelInterface');
-        $mvcEvent  = $this->createMock('Zend\\Mvc\\MvcEvent');
+        $viewModel = $this->createMock('Laminas\\View\\Model\\ModelInterface');
+        $mvcEvent  = $this->createMock('Laminas\\Mvc\\MvcEvent');
 
         $mvcEvent->expects($this->any())->method('getError')->will($this->returnValue(Application::ERROR_EXCEPTION));
         $mvcEvent->expects($this->any())->method('getViewModel')->will($this->returnValue($viewModel));
@@ -164,8 +164,8 @@ class UnauthorizedStrategyTest extends TestCase
      */
     public function testIgnoresUnknownErrors()
     {
-        $viewModel = $this->createMock('Zend\\View\\Model\\ModelInterface');
-        $mvcEvent  = $this->createMock('Zend\\Mvc\\MvcEvent');
+        $viewModel = $this->createMock('Laminas\\View\\Model\\ModelInterface');
+        $mvcEvent  = $this->createMock('Laminas\\Mvc\\MvcEvent');
 
         $mvcEvent->expects($this->any())->method('getError')->will($this->returnValue('unknown'));
         $mvcEvent->expects($this->any())->method('getViewModel')->will($this->returnValue($viewModel));
@@ -181,9 +181,9 @@ class UnauthorizedStrategyTest extends TestCase
      */
     public function testIgnoresOnExistingResponse()
     {
-        $response = $this->createMock('Zend\\Stdlib\\ResponseInterface');
-        $viewModel = $this->createMock('Zend\\View\\Model\\ModelInterface');
-        $mvcEvent  = $this->createMock('Zend\\Mvc\\MvcEvent');
+        $response = $this->createMock('Laminas\\Stdlib\\ResponseInterface');
+        $viewModel = $this->createMock('Laminas\\View\\Model\\ModelInterface');
+        $mvcEvent  = $this->createMock('Laminas\\Mvc\\MvcEvent');
 
         $mvcEvent->expects($this->any())->method('getResult')->will($this->returnValue($response));
         $mvcEvent->expects($this->any())->method('getViewModel')->will($this->returnValue($viewModel));

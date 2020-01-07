@@ -26,7 +26,7 @@ class ConfigServiceFactoryTest extends TestCase
     public function testCreateService()
     {
         $factory        = new ConfigServiceFactory();
-        $serviceLocator = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
 
         $serviceLocator
             ->expects($this->any())

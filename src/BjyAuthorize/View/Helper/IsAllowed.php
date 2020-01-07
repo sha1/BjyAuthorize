@@ -9,7 +9,7 @@
 namespace BjyAuthorize\View\Helper;
 
 use BjyAuthorize\Service\Authorize;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * IsAllowed View helper. Allows checking access to a resource/privilege in views.

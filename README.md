@@ -1,18 +1,18 @@
-# BjyAuthorize - Acl security for ZF3
+# BjyAuthorize - Acl security for Laminas / ZF3
 
 [![Build Status](https://travis-ci.org/kokspflanze/BjyAuthorize.png?branch=master)](https://travis-ci.org/kokspflanze/BjyAuthorize)
 [![Total Downloads](https://poser.pugx.org/kokspflanze/bjy-authorize/downloads.png)](https://packagist.org/packages/kokspflanze/bjy-authorize)
 [![Latest Stable Version](https://poser.pugx.org/kokspflanze/bjy-authorize/v/stable.png)](https://packagist.org/packages/kokspflanze/bjy-authorize)
 
 
-This module is designed to provide a facade for `Zend\Permissions\Acl` that will
+This module is designed to provide a facade for `laminas\Permissions\Acl` that will
 ease its usage with modules and applications. By default, it provides simple
-setup via config files or by using `Zend\Db` or Doctrine ORM/ODM (via ZfcUserDoctrineORM).
+setup via config files or by using `laminas\Db` or Doctrine ORM/ODM (via ZfcUserDoctrineORM).
 
 ## Information
 
 this is a fork of [bjyoungblood/BjyAuthorize](https://github.com/bjyoungblood/BjyAuthorize).
-I added ZF3 support, so the module works with Zend Framework 2 and 3.
+I added Laminas/ZF3 support, so the module works with Laminas / Zend Framework 2 and 3.
 If you found a bug, please report it, just pm me in [gitter](https://gitter.im/kokspflanze) or open a PullRequest.
 
 ## What does BjyAuthorize do?
@@ -20,17 +20,17 @@ If you found a bug, please report it, just pm me in [gitter](https://gitter.im/k
 BjyAuthorize adds event listeners to your application so that you have a "security" or "firewall" that disallows
 unauthorized access to your controllers or routes.
 
-This is what a normal `Zend\Mvc` application workflow would look like:
+This is what a normal `Laminas\Mvc` application workflow would look like:
 
-![Zend Mvc Application workflow](http://yuml.me/diagram/plain;/activity/%28start%29-%3E%28route%29%2C%20%28route%29-%3E%28get%20controller%29%2C%20%28get%20controller%29-%3E%28dispatch%29%2C%20%28dispatch%29-%3E%28end%29)
+![Laminas Mvc Application workflow](http://yuml.me/diagram/plain;/activity/%28start%29-%3E%28route%29%2C%20%28route%29-%3E%28get%20controller%29%2C%20%28get%20controller%29-%3E%28dispatch%29%2C%20%28dispatch%29-%3E%28end%29)
 
 And here's how it would look like with BjyAuthorize enabled:
 
-![Zend Mvc Application workflow with BjyAuthorize](http://yuml.me/diagram/plain;/activity/%28start%29-%3E%28route%29%2C%20%28route%29-%3E%3Ca%3E-no%20route%20guard%3E%28get%20controller%29%2C%20%3Ca%3E-%3E%28route%20guard%29%2C%20%28route%20guard%29-%3E%3Cb%3E-authorized%3E%28get%20controller%29%2C%20%3Cb%3Eunauthorized-%3E%28error%29%2C%20%28get%20controller%29-%3E%3Cc%3E-no%20controller%20guard%3E%28dispatch%29%2C%20%3Cc%3E-%3E%28controller%20guard%29%2C%20%28controller%20guard%29-%3E%3Cd%3E-authorized%3E%28dispatch%29%2C%20%3Cd%3Eunauthorized-%3E%28error%29%2C%20%28error%29-%3E%28end%29%2C%20%28dispatch%29-%3E%28end%29)
+![Laminas Mvc Application workflow with BjyAuthorize](http://yuml.me/diagram/plain;/activity/%28start%29-%3E%28route%29%2C%20%28route%29-%3E%3Ca%3E-no%20route%20guard%3E%28get%20controller%29%2C%20%3Ca%3E-%3E%28route%20guard%29%2C%20%28route%20guard%29-%3E%3Cb%3E-authorized%3E%28get%20controller%29%2C%20%3Cb%3Eunauthorized-%3E%28error%29%2C%20%28get%20controller%29-%3E%3Cc%3E-no%20controller%20guard%3E%28dispatch%29%2C%20%3Cc%3E-%3E%28controller%20guard%29%2C%20%28controller%20guard%29-%3E%3Cd%3E-authorized%3E%28dispatch%29%2C%20%3Cd%3Eunauthorized-%3E%28error%29%2C%20%28error%29-%3E%28end%29%2C%20%28dispatch%29-%3E%28end%29)
 
 ## Requirements
 
- * [Zend Framework 2](https://github.com/zendframework/zf2)
+ * [Laminas](https://getlaminas.org/) / [Zend Framework 2](https://github.com/zendframework/zf2)
  * [ZfcUser](https://github.com/ZF-Commons/ZfcUser) (optional)
  * [ZfcUserDoctrineORM](https://github.com/ZF-Commons/ZfcUserDoctrineORM) (optional)
 
@@ -46,7 +46,7 @@ php composer.phar require kokspflanze/bjy-authorize
 
 ## Configuration
 
-Following steps apply if you want to use `ZfcUser` with `Zend\Db`. If you want to use Doctrine ORM/ODM, you should
+Following steps apply if you want to use `ZfcUser` with `Laminas\Db`. If you want to use Doctrine ORM/ODM, you should
 also check the [doctrine documentation](https://github.com/bjyoungblood/BjyAuthorize/blob/master/docs/doctrine.md).
 
  1. Ensure that following modules are enabled in your `application.config.php` file in the this order:
@@ -85,9 +85,9 @@ return [
          */
 
         /* role providers simply provide a list of roles that should be inserted
-         * into the Zend\Acl instance. the module comes with two providers, one
+         * into the Laminas\Acl instance. the module comes with two providers, one
          * to specify roles in a config file and one to load roles using a
-         * Zend\Db adapter.
+         * Laminas\Db adapter.
          */
         'role_providers' => [
 
@@ -131,7 +131,7 @@ return [
         /* rules can be specified here with the format:
          * [roles (array], resource, [privilege (array|string], assertion])
          * assertions will be loaded using the service manager and must implement
-         * Zend\Acl\Assertion\AssertionInterface.
+         * Laminas\Acl\Assertion\AssertionInterface.
          * *if you use assertions, define them using the service manager!*
          */
         'rule_providers' => [
@@ -175,7 +175,7 @@ return [
                     'roles' => ['staffer', 'admin'],
                 ],
                 ['controller' => 'zfcuser', 'roles' => []],
-                // Below is the default index action used by the ZendSkeletonApplication
+                // Below is the default index action used by the LaminasSkeletonApplication
                 // ['controller' => 'Application\Controller\Index', 'roles' => ['guest', 'user']],
             ],
 
@@ -187,7 +187,7 @@ return [
                 ['route' => 'zfcuser/logout', 'roles' => ['user']],
                 ['route' => 'zfcuser/login', 'roles' => ['guest']],
                 ['route' => 'zfcuser/register', 'roles' => ['guest']],
-                // Below is the default index action used by the ZendSkeletonApplication
+                // Below is the default index action used by the LaminasSkeletonApplication
                 ['route' => 'home', 'roles' => ['guest', 'user']],
             ],
         ],

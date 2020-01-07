@@ -47,8 +47,8 @@ class RoleCollectorTest extends TestCase
      */
     public function testCollect()
     {
-        $role1    = $this->createMock('Zend\\Permissions\\Acl\\Role\\RoleInterface');
-        $mvcEvent = $this->createMock('Zend\\Mvc\\MvcEvent');
+        $role1    = $this->createMock('Laminas\\Permissions\\Acl\\Role\\RoleInterface');
+        $mvcEvent = $this->createMock('Laminas\\Mvc\\MvcEvent');
 
         $role1->expects($this->any())->method('getRoleId')->will($this->returnValue('role1'));
 
@@ -94,8 +94,8 @@ class RoleCollectorTest extends TestCase
      */
     public function testTraversableCollect()
     {
-        $role1    = $this->createMock('Zend\\Permissions\\Acl\\Role\\RoleInterface');
-        $mvcEvent = $this->createMock('Zend\\Mvc\\MvcEvent');
+        $role1    = $this->createMock('Laminas\\Permissions\\Acl\\Role\\RoleInterface');
+        $mvcEvent = $this->createMock('Laminas\\Mvc\\MvcEvent');
 
         $role1->expects($this->any())->method('getRoleId')->will($this->returnValue('role1'));
 

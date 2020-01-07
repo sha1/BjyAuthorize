@@ -25,7 +25,7 @@ class ObjectRepositoryRoleProviderFactoryTest extends TestCase
 
     protected function setUp()
     {
-        $this->locator       = $this->createMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $this->locator       = $this->createMock('Laminas\ServiceManager\ServiceLocatorInterface');
         $this->entityManager = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
         $this->repository    = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
         $this->factory       = new ObjectRepositoryRoleProviderFactory();

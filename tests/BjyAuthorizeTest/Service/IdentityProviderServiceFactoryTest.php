@@ -26,7 +26,7 @@ class IdentityProviderServiceFactoryTest extends TestCase
     public function testCreateService()
     {
         $factory          = new IdentityProviderServiceFactory();
-        $serviceLocator   = $this->createMock('Zend\\ServiceManager\\ServiceLocatorInterface');
+        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $identityProvider = $this->createMock('BjyAuthorize\\Provider\\Identity\\ProviderInterface');
         $config           = ['identity_provider' => 'foo'];
 

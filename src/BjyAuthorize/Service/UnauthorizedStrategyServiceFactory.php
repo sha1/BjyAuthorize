@@ -10,8 +10,8 @@ namespace BjyAuthorize\Service;
 
 use BjyAuthorize\View\UnauthorizedStrategy;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Factory responsible of instantiating {@see \BjyAuthorize\View\UnauthorizedStrategy}

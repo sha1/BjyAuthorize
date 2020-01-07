@@ -9,7 +9,7 @@
 namespace BjyAuthorize\Controller\Plugin;
 
 use BjyAuthorize\Service\Authorize;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 
 /**
  * IsAllowed Controller plugin. Allows checking access to a resource/privilege in controllers.
