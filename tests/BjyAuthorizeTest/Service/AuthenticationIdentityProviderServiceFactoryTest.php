@@ -40,11 +40,11 @@ class AuthenticationIdentityProviderServiceFactoryTest extends TestCase
         $serviceLocator
             ->expects($this->any())
             ->method('get')
-            ->with($this->logicalOr('zfcuser_user_service', 'BjyAuthorize\\Config'))
+            ->with($this->logicalOr('lmcuser_user_service', 'BjyAuthorize\\Config'))
             ->will(
                 $this->returnCallback(
                     function ($service) use ($user, $config) {
-                        if ('zfcuser_user_service' === $service) {
+                        if ('lmcuser_user_service' === $service) {
                             return $user;
                         }
 

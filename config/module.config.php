@@ -16,7 +16,7 @@ return [
         'authenticated_role'    => 'user',
 
         // identity provider service name
-        'identity_provider'     => 'BjyAuthorize\Provider\Identity\ZfcUserZendDb',
+        'identity_provider'     => 'BjyAuthorize\Provider\Identity\LmcUserLaminasDb',
 
         // Role providers to be used to load all available roles into Laminas\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
@@ -65,7 +65,7 @@ return [
             'BjyAuthorize\Guard\Controller'         => 'BjyAuthorize\Service\ControllerGuardServiceFactory',
             'BjyAuthorize\Guard\Route'              => 'BjyAuthorize\Service\RouteGuardServiceFactory',
             'BjyAuthorize\Provider\Role\Config'     => 'BjyAuthorize\Service\ConfigRoleProviderServiceFactory',
-            'BjyAuthorize\Provider\Role\ZendDb'     => 'BjyAuthorize\Service\ZendDbRoleProviderServiceFactory',
+            'BjyAuthorize\Provider\Role\LaminasDb'  => 'BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory',
             'BjyAuthorize\Provider\Rule\Config'     => 'BjyAuthorize\Service\ConfigRuleProviderServiceFactory',
             'BjyAuthorize\Provider\Resource\Config' => 'BjyAuthorize\Service\ConfigResourceProviderServiceFactory',
             'BjyAuthorize\Service\Authorize'        => 'BjyAuthorize\Service\AuthorizeFactory',
@@ -76,8 +76,8 @@ return [
             'BjyAuthorize\Provider\Role\ObjectRepositoryProvider'
                 => 'BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory',
             'BjyAuthorize\Collector\RoleCollector'  => 'BjyAuthorize\Service\RoleCollectorServiceFactory',
-            'BjyAuthorize\Provider\Identity\ZfcUserZendDb'
-                => 'BjyAuthorize\Service\ZfcUserZendDbIdentityProviderServiceFactory',
+            'BjyAuthorize\Provider\Identity\LmcUserLaminasDb'
+                => 'BjyAuthorize\Service\LmcUserLaminasDbIdentityProviderServiceFactory',
             'BjyAuthorize\View\UnauthorizedStrategy'
                 => 'BjyAuthorize\Service\UnauthorizedStrategyServiceFactory',
             'BjyAuthorize\Service\RoleDbTableGateway' => 'BjyAuthorize\Service\UserRoleServiceFactory',

@@ -8,28 +8,28 @@
 
 namespace BjyAuthorize\Service;
 
-use BjyAuthorize\Provider\Identity\ZfcUserZendDb;
+use BjyAuthorize\Provider\Identity\LmcUserLaminasDb;
 use Interop\Container\ContainerInterface;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Factory responsible of instantiating {@see \BjyAuthorize\Provider\Identity\ZfcUserZendDb}
+ * Factory responsible of instantiating {@see \BjyAuthorize\Provider\Identity\LmcUserLaminasDb}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ZfcUserZendDbIdentityProviderServiceFactory implements FactoryInterface
+class LaminasUserLaminasDbIdentityProviderServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /* @var $tableGateway \Laminas\Db\TableGateway\TableGateway */
-        $tableGateway = new TableGateway('user_role_linker', $container->get('zfcuser_zend_db_adapter'));
-        /* @var $userService \ZfcUser\Service\User */
-        $userService = $container->get('zfcuser_user_service');
+        $tableGateway = new TableGateway('user_role_linker', $container->get('lmcuser_laminas_db_adapter'));
+        /* @var $userService \LmcUser\Service\User */
+        $userService = $container->get('lmcuser_user_service');
         $config = $container->get('BjyAuthorize\Config');
 
-        $provider = new ZfcUserZendDb($tableGateway, $userService);
+        $provider = new LmcUserLaminasDb($tableGateway, $userService);
 
         $provider->setDefaultRole($config['default_role']);
 
@@ -39,10 +39,10 @@ class ZfcUserZendDbIdentityProviderServiceFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \BjyAuthorize\Provider\Identity\ZfcUserZendDb
+     * @return \BjyAuthorize\Provider\Identity\LmcUserLaminasDb
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator, ZfcUserZendDb::class);
+        return $this($serviceLocator, LmcUserLaminasDb::class);
     }
 }

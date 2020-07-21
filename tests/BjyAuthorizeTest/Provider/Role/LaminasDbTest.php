@@ -9,15 +9,15 @@
 namespace BjyAuthorizeTest\Provider\Role;
 
 use BjyAuthorize\Acl\Role;
-use BjyAuthorize\Provider\Role\ZendDb;
+use BjyAuthorize\Provider\Role\LaminasDb;
 use \PHPUnit\Framework\TestCase;
 
 /**
- * {@see \BjyAuthorize\Provider\Role\ZendDb} test
+ * {@see \BjyAuthorize\Provider\Role\LaminasDb} test
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class ZendDbTest extends TestCase
+class LaminasDbTest extends TestCase
 {
     /**
      * @var \BjyAuthorize\Provider\Role\ObjectRepositoryProvider
@@ -25,29 +25,29 @@ class ZendDbTest extends TestCase
     private $provider;
 
     /**
-     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $serviceLocator;
-    
+
     /**
-     * @var \Laminas\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\Db\TableGateway\TableGateway|\PHPUnit\Framework\MockObject\MockObject
      */
     private $tableGateway;
 
     /**
-     * @covers \BjyAuthorize\Provider\Role\ZendDb::__construct
+     * @covers \BjyAuthorize\Provider\Role\LaminasDb::__construct
      */
     protected function setUp(): void
     {
         $this->serviceLocator = $this->createMock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $this->provider       = new ZendDb([], $this->serviceLocator);
+        $this->provider       = new LaminasDb([], $this->serviceLocator);
         $this->tableGateway   = $this->getMockBuilder('Laminas\Db\TableGateway\TableGateway')
                                      ->disableOriginalConstructor()
                                      ->getMock();
     }
 
     /**
-     * @covers \BjyAuthorize\Provider\Role\ZendDb::getRoles
+     * @covers \BjyAuthorize\Provider\Role\LaminasDb::getRoles
      */
     public function testGetRoles()
     {
@@ -61,13 +61,13 @@ class ZendDbTest extends TestCase
         );
 
         $this->serviceLocator->expects($this->any())->method('get')->will($this->returnValue($this->tableGateway));
-        $provider = new ZendDb([], $this->serviceLocator);
+        $provider = new LaminasDb([], $this->serviceLocator);
 
         $this->assertEquals($provider->getRoles(), [new Role('guest'), new Role('user')]);
     }
 
     /**
-     * @covers \BjyAuthorize\Provider\Role\ZendDb::getRoles
+     * @covers \BjyAuthorize\Provider\Role\LaminasDb::getRoles
      */
     public function testGetRolesWithInheritance()
     {
@@ -81,7 +81,7 @@ class ZendDbTest extends TestCase
         );
 
         $this->serviceLocator->expects($this->any())->method('get')->will($this->returnValue($this->tableGateway));
-        $provider = new ZendDb([], $this->serviceLocator);
+        $provider = new LaminasDb([], $this->serviceLocator);
 
         $this->assertEquals($provider->getRoles(), [new Role('guest'), new Role('user', 'guest')]);
     }
