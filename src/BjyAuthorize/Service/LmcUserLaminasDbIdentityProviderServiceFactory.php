@@ -19,7 +19,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class LaminasUserLaminasDbIdentityProviderServiceFactory implements FactoryInterface
+class LmcUserLaminasDbIdentityProviderServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
