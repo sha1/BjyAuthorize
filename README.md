@@ -174,7 +174,7 @@ return [
                     'controller' => ['search', 'administration'],
                     'roles' => ['staffer', 'admin'],
                 ],
-                ['controller' => 'zfcuser', 'roles' => []],
+                ['controller' => 'lmcuser', 'roles' => []],
                 // Below is the default index action used by the LaminasSkeletonApplication
                 // ['controller' => 'Application\Controller\Index', 'roles' => ['guest', 'user']],
             ],
@@ -183,10 +183,10 @@ return [
              * access to all routes unless they are specified here.
              */
             \BjyAuthorize\Guard\Route::class => [
-                ['route' => 'zfcuser', 'roles' => ['user']],
-                ['route' => 'zfcuser/logout', 'roles' => ['user']],
-                ['route' => 'zfcuser/login', 'roles' => ['guest']],
-                ['route' => 'zfcuser/register', 'roles' => ['guest']],
+                ['route' => 'lmcuser', 'roles' => ['user']],
+                ['route' => 'lmcuser/logout', 'roles' => ['user']],
+                ['route' => 'lmcuser/login', 'roles' => ['guest']],
+                ['route' => 'lmcuser/register', 'roles' => ['guest']],
                 // Below is the default index action used by the LaminasSkeletonApplication
                 ['route' => 'home', 'roles' => ['guest', 'user']],
             ],

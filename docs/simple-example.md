@@ -93,7 +93,7 @@ return [
     'bjyauthorize' => [
         'guards' => [
             \BjyAuthorize\Guard\Controller::class => [
-                ['controller' => 'zfcuser', 'roles' => []],
+                ['controller' => 'lmcuser', 'roles' => []],
                 ['controller' => ['Module\Controller\Menu1Controller'], 'roles' => ['admin']],
                 ['controller' => ['Module\Controller\Menu2Controller'], 'roles' => ['admin','affiliate']],
                 ['controller' => ['Module\Controller\Menu3Controller'], 'roles' => ['admin','affiliate','guest']],

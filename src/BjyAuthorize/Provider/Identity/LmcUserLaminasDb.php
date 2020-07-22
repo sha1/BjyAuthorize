@@ -12,14 +12,14 @@ use BjyAuthorize\Exception\InvalidRoleException;
 use Laminas\Db\Sql\Select;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use ZfcUser\Service\User;
+use LmcUser\Service\User;
 
 /**
  * Identity provider based on {@see \Laminas\Db\Adapter\Adapter}
  *
  * @author Ben Youngblood <bx.youngblood@gmail.com>
  */
-class ZfcUserZendDb implements ProviderInterface
+class LmcUserLaminasDb implements ProviderInterface
 {
     /**
      * @var User
@@ -43,7 +43,7 @@ class ZfcUserZendDb implements ProviderInterface
 
     /**
      * @param \Laminas\Db\TableGateway\TableGateway $tableGateway
-     * @param \ZfcUser\Service\User $userService
+     * @param \LmcUser\Service\User $userService
      */
     public function __construct(TableGateway $tableGateway, User $userService)
     {

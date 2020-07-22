@@ -17,7 +17,7 @@ use Laminas\Db\Sql\Select;
  *
  * @author Ben Youngblood <bx.youngblood@gmail.com>
  */
-class ZendDb implements ProviderInterface
+class LaminasDb implements ProviderInterface
 {
     /**
      * @var ContainerInterface

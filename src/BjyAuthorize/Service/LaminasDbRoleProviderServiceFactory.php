@@ -8,22 +8,22 @@
 
 namespace BjyAuthorize\Service;
 
-use BjyAuthorize\Provider\Role\ZendDb;
+use BjyAuthorize\Provider\Role\LaminasDb;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Factory responsible of instantiating {@see \BjyAuthorize\Provider\Role\ZendDb}
+ * Factory responsible of instantiating {@see \BjyAuthorize\Provider\Role\LaminasDb}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ZendDbRoleProviderServiceFactory implements FactoryInterface
+class LaminasDbRoleProviderServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new ZendDb(
-            $container->get('BjyAuthorize\Config')['role_providers']['BjyAuthorize\Provider\Role\ZendDb'],
+        return new LaminasDb(
+            $container->get('BjyAuthorize\Config')['role_providers']['BjyAuthorize\Provider\Role\LaminasDb'],
             $container
         );
     }
@@ -31,10 +31,10 @@ class ZendDbRoleProviderServiceFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \BjyAuthorize\Provider\Role\ZendDb
+     * @return \BjyAuthorize\Provider\Role\LaminasDb
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator, ZendDb::class);
+        return $this($serviceLocator, LaminasDb::class);
     }
 }

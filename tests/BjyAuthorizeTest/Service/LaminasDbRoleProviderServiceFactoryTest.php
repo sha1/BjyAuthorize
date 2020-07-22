@@ -11,25 +11,25 @@
 namespace BjyAuthorizeTest\Service;
 
 use \PHPUnit\Framework\TestCase;
-use BjyAuthorize\Service\ZendDbRoleProviderServiceFactory;
+use BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory;
 
 /**
- * Test for {@see \BjyAuthorize\Service\ZendDbRoleProviderServiceFactory}
+ * Test for {@see \BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class ZendDbRoleProviderServiceFactoryTest extends TestCase
+class LaminasDbRoleProviderServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\ZendDbRoleProviderServiceFactory::createService
+     * @covers \BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory::createService
      */
     public function testCreateService()
     {
-        $factory          = new ZendDbRoleProviderServiceFactory();
+        $factory          = new LaminasDbRoleProviderServiceFactory();
         $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
         $config           = [
             'role_providers' => [
-                'BjyAuthorize\Provider\Role\ZendDb' => [],
+                'BjyAuthorize\Provider\Role\LaminasDb' => [],
             ],
         ];
 
@@ -41,6 +41,6 @@ class ZendDbRoleProviderServiceFactoryTest extends TestCase
 
         $guard = $factory->createService($serviceLocator);
 
-        $this->assertInstanceOf('BjyAuthorize\\Provider\\Role\\ZendDb', $guard);
+        $this->assertInstanceOf('BjyAuthorize\\Provider\\Role\\LaminasDb', $guard);
     }
 }
