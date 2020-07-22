@@ -46,7 +46,7 @@ class Module implements
         $guards = $serviceManager->get('BjyAuthorize\Guards');
 
         // TODO remove in 3.0.0, fix alias
-        if (!$serviceManager->has('lmcuser_user_service')) {
+        if ($serviceManager instanceof ServiceManager && $serviceManager->has('lmcuser_user_service') === false) {
             $serviceManager->setAllowOverride(true);
             $serviceManager->setAlias('lmcuser_user_service', 'zfcuser_user_service');
             $serviceManager->setAllowOverride(false);
