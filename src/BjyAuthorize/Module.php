@@ -17,6 +17,7 @@ use Laminas\ModuleManager\Feature\BootstrapListenerInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Laminas\ModuleManager\Feature\ViewHelperProviderInterface;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * BjyAuthorize Module
@@ -36,13 +37,20 @@ class Module implements
     {
         /* @var $app \Laminas\Mvc\ApplicationInterface */
         $app = $event->getTarget();
-        /* @var $sm \Laminas\ServiceManager\ServiceLocatorInterface */
+        /** @var ServiceManager $serviceManager */
         $serviceManager = $app->getServiceManager();
         $config = $serviceManager->get('BjyAuthorize\Config');
         /** @var UnauthorizedStrategy $strategy */
         $strategy = $serviceManager->get($config['unauthorized_strategy']);
         /** @var AbstractGuard[] $guards */
         $guards = $serviceManager->get('BjyAuthorize\Guards');
+
+        // TODO remove in 3.0.0, fix alias
+        if (!$serviceManager->has('lmcuser_user_service')) {
+            $serviceManager->setAllowOverride(true);
+            $serviceManager->setAlias('lmcuser_user_service', 'zfcuser_user_service');
+            $serviceManager->setAllowOverride(false);
+        }
 
         foreach ($guards as $guard) {
             $guard->attach($app->getEventManager());

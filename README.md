@@ -5,9 +5,9 @@
 [![Latest Stable Version](https://poser.pugx.org/kokspflanze/bjy-authorize/v/stable.png)](https://packagist.org/packages/kokspflanze/bjy-authorize)
 
 
-This module is designed to provide a facade for `laminas\Permissions\Acl` that will
+This module is designed to provide a facade for `Laminas\Permissions\Acl` that will
 ease its usage with modules and applications. By default, it provides simple
-setup via config files or by using `laminas\Db` or Doctrine ORM/ODM (via ZfcUserDoctrineORM).
+setup via config files or by using `Laminas\Db` or Doctrine ORM/ODM.
 
 ## Information
 
@@ -31,8 +31,7 @@ And here's how it would look like with BjyAuthorize enabled:
 ## Requirements
 
  * [Laminas](https://getlaminas.org/) / [Zend Framework 2](https://github.com/zendframework/zf2)
- * [ZfcUser](https://github.com/ZF-Commons/ZfcUser) (optional)
- * [ZfcUserDoctrineORM](https://github.com/ZF-Commons/ZfcUserDoctrineORM) (optional)
+ * [LmcUser](https://github.com/Laminas-Commons/LmcUser) (optional)
 
 ## Installation
 
