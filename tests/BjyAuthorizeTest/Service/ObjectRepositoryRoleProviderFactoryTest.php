@@ -8,8 +8,12 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
+use BjyAuthorize\Provider\Role\ObjectRepositoryProvider;
 use BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * {@see \BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory} test
@@ -18,53 +22,45 @@ use BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory;
  */
 class ObjectRepositoryRoleProviderFactoryTest extends TestCase
 {
-    private $locator;
-    private $entityManager;
-    private $repository;
-    private $factory;
-
-    protected function setUp(): void
-    {
-        $this->locator       = $this->createMock('Laminas\ServiceManager\ServiceLocatorInterface');
-        $this->entityManager = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->repository    = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
-        $this->factory       = new ObjectRepositoryRoleProviderFactory();
-    }
-
     /**
-     * @covers \BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory::createService
+     * @covers \BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
+        $container = $this->createMock(ContainerInterface::class);
+        $entityManager = $this->createMock(ObjectManager::class);
+        $repository = $this->createMock(ObjectRepository::class);
+        $factory = new ObjectRepositoryRoleProviderFactory();
+
         $testClassName = 'TheTestClass';
 
         $config = [
             'role_providers' => [
-                'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => [
+                ObjectRepositoryProvider::class => [
                     'role_entity_class' => $testClassName,
-                    'object_manager'    => 'doctrine.entitymanager.orm_default',
+                    'object_manager' => 'doctrine.entitymanager.orm_default',
                 ],
             ],
         ];
 
-        $this->entityManager->expects($this->once())
+        $entityManager->expects($this->once())
             ->method('getRepository')
             ->with($testClassName)
-            ->will($this->returnValue($this->repository));
+            ->will($this->returnValue($repository));
 
-        $this->locator->expects($this->at(0))
+        $container->expects($this->at(0))
             ->method('get')
             ->with('BjyAuthorize\Config')
             ->will($this->returnValue($config));
 
-        $this->locator->expects($this->at(1))
+        $container->expects($this->at(1))
             ->method('get')
             ->with('doctrine.entitymanager.orm_default')
-            ->will($this->returnValue($this->entityManager));
+            ->will($this->returnValue($entityManager));
 
         $this->assertInstanceOf(
-            'BjyAuthorize\Provider\Role\ObjectRepositoryProvider',
-            $this->factory->createService($this->locator)
+            ObjectRepositoryProvider::class,
+            $factory($container, ObjectRepositoryRoleProviderFactory::class)
         );
     }
 }

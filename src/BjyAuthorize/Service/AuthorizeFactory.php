@@ -9,8 +9,7 @@
 namespace BjyAuthorize\Service;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory responsible of building the {@see \BjyAuthorize\Service\Authorize} service
@@ -19,18 +18,12 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class AuthorizeFactory implements FactoryInterface
 {
+    /**
+     * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
+     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Authorize($container->get('BjyAuthorize\Config'), $container);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \BjyAuthorize\Service\Authorize
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, Authorize::class);
     }
 }

@@ -24,7 +24,7 @@ class RoleCollectorTest extends TestCase
     protected $collector;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\BjyAuthorize\Provider\Identity\ProviderInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\BjyAuthorize\Provider\Identity\ProviderInterface
      */
     protected $identityProvider;
 

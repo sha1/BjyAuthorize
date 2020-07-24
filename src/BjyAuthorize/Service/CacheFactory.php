@@ -9,10 +9,9 @@
 namespace BjyAuthorize\Service;
 
 use Interop\Container\ContainerInterface;
-use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Cache\StorageFactory;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Cache\Storage\StorageInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory for building the cache storage
@@ -22,24 +21,11 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 class CacheFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array|null $options
-     * @return StorageInterface
+     * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return StorageFactory::factory($container->get('BjyAuthorize\Config')['cache_options']);
-    }
-
-    /**
-     * Create a cache
-     *
-     * @param   ServiceLocatorInterface $serviceLocator
-     * @return  StorageInterface
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, StorageFactory::class);
     }
 }

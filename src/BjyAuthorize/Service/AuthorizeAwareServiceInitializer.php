@@ -11,8 +11,7 @@
 namespace BjyAuthorize\Service;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\InitializerInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Initializer\InitializerInterface;
 
 /**
  * Initializer that injects a {@see \BjyAuthorize\Service\Authorize} in
@@ -24,6 +23,7 @@ class AuthorizeAwareServiceInitializer implements InitializerInterface
 {
     /**
      * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Initializer\InitializerInterface::__invoke()
      */
     public function __invoke(ContainerInterface $container, $instance)
     {
@@ -32,16 +32,8 @@ class AuthorizeAwareServiceInitializer implements InitializerInterface
         }
 
         /* @var $authorize \BjyAuthorize\Service\Authorize */
-        $authorize = $container->get('BjyAuthorize\Service\Authorize');
+        $authorize = $container->get(Authorize::class);
 
         $instance->setAuthorizeService($authorize);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize($instance, ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, $instance);
     }
 }

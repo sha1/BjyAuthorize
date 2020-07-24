@@ -10,8 +10,10 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
+use BjyAuthorize\Provider\Resource\Config;
 use BjyAuthorize\Service\ConfigResourceProviderServiceFactory;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\ConfigResourceProviderServiceFactory}
@@ -21,26 +23,26 @@ use BjyAuthorize\Service\ConfigResourceProviderServiceFactory;
 class ConfigResourceProviderServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\ConfigResourceProviderServiceFactory::createService
+     * @covers \BjyAuthorize\Service\ConfigResourceProviderServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new ConfigResourceProviderServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config           = [
+        $factory = new ConfigResourceProviderServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [
             'resource_providers' => [
-                'BjyAuthorize\Provider\Resource\Config' => [],
+                Config::class => [],
             ],
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
             ->will($this->returnValue($config));
 
-        $guard = $factory->createService($serviceLocator);
+        $guard = $factory($container, ConfigResourceProviderServiceFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\\Provider\\Resource\\Config', $guard);
+        $this->assertInstanceOf(Config::class, $guard);
     }
 }

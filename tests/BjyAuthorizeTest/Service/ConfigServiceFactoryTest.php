@@ -10,8 +10,9 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Service\ConfigServiceFactory;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\ConfigServiceFactory}
@@ -21,18 +22,18 @@ use BjyAuthorize\Service\ConfigServiceFactory;
 class ConfigServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\ConfigServiceFactory::createService
+     * @covers \BjyAuthorize\Service\ConfigServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory        = new ConfigServiceFactory();
-        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
+        $factory = new ConfigServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->will($this->returnValue(['bjyauthorize' => ['foo' => 'bar']]));
 
-        $this->assertSame(['foo' => 'bar'], $factory->createService($serviceLocator));
+        $this->assertSame(['foo' => 'bar'], $factory($container, ConfigServiceFactory::class));
     }
 }

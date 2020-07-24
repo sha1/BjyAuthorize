@@ -3,6 +3,7 @@
 
 namespace BjyAuthorize\View\Helper;
 
+use BjyAuthorize\Service\Authorize;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\FactoryInterface;
@@ -28,7 +29,7 @@ class IsAllowedFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /* @var $authorize \BjyAuthorize\Service\Authorize */
-        $authorize = $container->get('BjyAuthorize\Service\Authorize');
+        $authorize = $container->get(Authorize::class);
 
         return new IsAllowed($authorize);
     }

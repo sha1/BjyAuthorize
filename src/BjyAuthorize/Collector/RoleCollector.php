@@ -9,10 +9,10 @@
 namespace BjyAuthorize\Collector;
 
 use BjyAuthorize\Provider\Identity\ProviderInterface;
-use Serializable;
+use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use ZendDeveloperTools\Collector\CollectorInterface;
+use Serializable;
 
 /**
  * Role collector - collects the role during dispatch

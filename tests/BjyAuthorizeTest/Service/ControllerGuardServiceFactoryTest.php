@@ -10,8 +10,10 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
+use BjyAuthorize\Guard\Controller;
 use BjyAuthorize\Service\ControllerGuardServiceFactory;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\ControllerGuardServiceFactory}
@@ -21,26 +23,26 @@ use BjyAuthorize\Service\ControllerGuardServiceFactory;
 class ControllerGuardServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\ControllerGuardServiceFactory::createService
+     * @covers \BjyAuthorize\Service\ControllerGuardServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new ControllerGuardServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config           = [
+        $factory = new ControllerGuardServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [
             'guards' => [
-                'BjyAuthorize\\Guard\\Controller' => [],
+                Controller::class => [],
             ],
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
             ->will($this->returnValue($config));
 
-        $guard = $factory->createService($serviceLocator);
+        $guard = $factory($container, ControllerGuardServiceFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\\Guard\\Controller', $guard);
+        $this->assertInstanceOf(Controller::class, $guard);
     }
 }

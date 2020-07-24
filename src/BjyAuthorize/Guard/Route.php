@@ -9,6 +9,7 @@
 namespace BjyAuthorize\Guard;
 
 use BjyAuthorize\Exception\UnAuthorizedException;
+use BjyAuthorize\Service\Authorize;
 use Laminas\Console\Request as ConsoleRequest;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Mvc\MvcEvent;
@@ -50,7 +51,7 @@ class Route extends AbstractGuard
     public function onRoute(MvcEvent $event)
     {
         /* @var $service \BjyAuthorize\Service\Authorize */
-        $service = $this->serviceLocator->get('BjyAuthorize\Service\Authorize');
+        $service = $this->container->get(Authorize::class);
         $match = $event->getRouteMatch();
         $routeName = $match->getMatchedRouteName();
 

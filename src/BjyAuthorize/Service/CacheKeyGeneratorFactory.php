@@ -9,8 +9,7 @@
 namespace BjyAuthorize\Service;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory for building a cache key generator
@@ -20,10 +19,8 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 class CacheKeyGeneratorFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array|null $options
-     * @return \Closure
+     * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -33,16 +30,5 @@ class CacheKeyGeneratorFactory implements FactoryInterface
         return function () use ($cacheKey) {
             return $cacheKey;
         };
-    }
-
-    /**
-     * Create a cache key
-     *
-     * @param   ServiceLocatorInterface $serviceLocator
-     * @return  callable
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, '');
     }
 }

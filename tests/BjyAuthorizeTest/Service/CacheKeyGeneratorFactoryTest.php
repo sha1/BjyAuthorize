@@ -9,7 +9,8 @@
 namespace BjyAuthorizeTest\Service;
 
 use BjyAuthorize\Service\CacheKeyGeneratorFactory;
-use \PHPUnit\Framework\TestCase;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PHPUnit tests for {@see \BjyAuthorize\Service\CacheKeyGeneratorFactory}
@@ -19,14 +20,14 @@ use \PHPUnit\Framework\TestCase;
 class CacheKeyGeneratorFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\CacheKeyGeneratorFactory::createService
+     * @covers \BjyAuthorize\Service\CacheKeyGeneratorFactory::__invoke
      */
-    public function testCreateServiceReturnsDefaultCallable()
+    public function testInvokeReturnsDefaultCallable()
     {
-        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config         = [];
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
@@ -34,22 +35,22 @@ class CacheKeyGeneratorFactoryTest extends TestCase
 
         $factory = new CacheKeyGeneratorFactory();
 
-        $cacheKeyGenerator = $factory->createService($serviceLocator);
+        $cacheKeyGenerator = $factory($container, CacheKeyGeneratorFactory::class);
         $this->assertTrue(is_callable($cacheKeyGenerator));
         $this->assertEquals('bjyauthorize_acl', $cacheKeyGenerator());
     }
 
     /**
-     * @covers \BjyAuthorize\Service\CacheKeyGeneratorFactory::createService
+     * @covers \BjyAuthorize\Service\CacheKeyGeneratorFactory::__invoke
      */
-    public function testCreateServiceReturnsCacheKeyGeneratorCallable()
+    public function testInvokeReturnsCacheKeyGeneratorCallable()
     {
-        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config         = [
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [
             'cache_key' => 'some_new_value'
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
@@ -57,7 +58,7 @@ class CacheKeyGeneratorFactoryTest extends TestCase
 
         $factory = new CacheKeyGeneratorFactory();
 
-        $cacheKeyGenerator = $factory->createService($serviceLocator);
+        $cacheKeyGenerator = $factory($container, CacheKeyGeneratorFactory::class);
         $this->assertTrue(is_callable($cacheKeyGenerator));
         $this->assertEquals('some_new_value', $cacheKeyGenerator());
     }

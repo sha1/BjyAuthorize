@@ -9,8 +9,9 @@
 namespace BjyAuthorizeTest\Provider\Role;
 
 use BjyAuthorize\Acl\Role;
-use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Provider\Role\ObjectRepositoryProvider;
+use Doctrine\Persistence\ObjectRepository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * {@see \BjyAuthorize\Provider\Role\ObjectRepositoryProvider} test
@@ -25,7 +26,7 @@ class ObjectRepositoryProviderTest extends TestCase
     private $provider;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $repository;
 
@@ -34,7 +35,7 @@ class ObjectRepositoryProviderTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->repository = $this->createMock(ObjectRepository::class);
         $this->provider = new ObjectRepositoryProvider($this->repository);
     }
 
@@ -42,7 +43,7 @@ class ObjectRepositoryProviderTest extends TestCase
      * @param string $name
      * @param string $parent
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\BjyAuthorize\Acl\HierarchicalRoleInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\BjyAuthorize\Acl\HierarchicalRoleInterface
      */
     private function createRoleMock($name, $parent)
     {

@@ -11,6 +11,8 @@
 namespace BjyAuthorizeTest\Service;
 
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\Exception\ContainerException;
+use Interop\Container\ContainerInterface;
 
 /**
  * @author Marco Pivetta <ocramius@gmail.com>s
@@ -23,17 +25,17 @@ class MockProvider
     public $options;
 
     /**
-     * @var \Laminas\ServiceManager\ServiceLocatorInterface
+     * @var \Interop\Container\ContainerInterface
      */
-    public $serviceLocator;
+    public $container;
 
     /**
-     * @param array                                        $options
-     * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param array $options
+     * @param \Interop\Container\ContainerInterface $container
      */
-    public function __construct(array $options, ServiceLocatorInterface $serviceLocator)
+    public function __construct(array $options, ContainerInterface $container)
     {
-        $this->options        = $options;
-        $this->serviceLocator = $serviceLocator;
+        $this->options = $options;
+        $this->container = $container;
     }
 }

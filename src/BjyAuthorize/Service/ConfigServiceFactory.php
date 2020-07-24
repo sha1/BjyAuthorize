@@ -9,8 +9,7 @@
 namespace BjyAuthorize\Service;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory responsible of retrieving an array containing the BjyAuthorize configuration
@@ -20,25 +19,13 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 class ConfigServiceFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array|null $options
-     * @return array
+     * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
 
         return $config['bjyauthorize'];
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return array
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, '');
     }
 }

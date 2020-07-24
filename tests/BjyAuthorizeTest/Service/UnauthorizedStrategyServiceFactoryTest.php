@@ -10,8 +10,10 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Service\UnauthorizedStrategyServiceFactory;
+use BjyAuthorize\View\UnauthorizedStrategy;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\UnauthorizedStrategyServiceFactory}
@@ -21,25 +23,25 @@ use BjyAuthorize\Service\UnauthorizedStrategyServiceFactory;
 class UnauthorizedStrategyServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\UnauthorizedStrategyServiceFactory::createService
+     * @covers \BjyAuthorize\Service\UnauthorizedStrategyServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new UnauthorizedStrategyServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config           = [
+        $factory = new UnauthorizedStrategyServiceFactory();
+        $containerInterface = $this->createMock(ContainerInterface::class);
+        $config = [
             'template' => 'foo/bar',
         ];
 
-        $serviceLocator
+        $containerInterface
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
             ->will($this->returnValue($config));
 
-        $strategy = $factory->createService($serviceLocator);
+        $strategy = $factory($containerInterface, UnauthorizedStrategyServiceFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\\View\\UnauthorizedStrategy', $strategy);
+        $this->assertInstanceOf(UnauthorizedStrategy::class, $strategy);
         $this->assertSame('foo/bar', $strategy->getTemplate());
     }
 }

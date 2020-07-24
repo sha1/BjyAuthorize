@@ -11,8 +11,7 @@ namespace BjyAuthorize\Service;
 
 use BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Simple authentication provider factory
@@ -23,6 +22,7 @@ class AuthenticationIdentityProviderServiceFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -34,13 +34,5 @@ class AuthenticationIdentityProviderServiceFactory implements FactoryInterface
         $simpleIdentityProvider->setAuthenticatedRole($config['authenticated_role']);
 
         return $simpleIdentityProvider;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, AuthenticationIdentityProvider::class);
     }
 }

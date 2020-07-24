@@ -9,8 +9,7 @@
 namespace BjyAuthorize\Service;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Base factory responsible of instantiating providers
@@ -23,8 +22,7 @@ abstract class BaseProvidersServiceFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
-     *
-     * @return array
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -40,15 +38,5 @@ abstract class BaseProvidersServiceFactory implements FactoryInterface
         }
 
         return $providers;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return array
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, '');
     }
 }

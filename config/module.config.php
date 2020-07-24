@@ -6,6 +6,8 @@
  * @license http://framework.zend.com/license/new-bsd New BSD License
  */
 
+namespace BjyAuthorize;
+
 return [
     'bjyauthorize' => [
         // default role for unauthenticated users
@@ -52,57 +54,49 @@ return [
         // Key used by the cache for caching the acl
         'cache_key'             => 'bjyauthorize_acl'
     ],
-
     'service_manager' => [
         'factories' => [
-            'BjyAuthorize\Cache'                    => 'BjyAuthorize\Service\CacheFactory',
-            'BjyAuthorize\CacheKeyGenerator'        => 'BjyAuthorize\Service\CacheKeyGeneratorFactory',
-            'BjyAuthorize\Config'                   => 'BjyAuthorize\Service\ConfigServiceFactory',
-            'BjyAuthorize\Guards'                   => 'BjyAuthorize\Service\GuardsServiceFactory',
-            'BjyAuthorize\RoleProviders'            => 'BjyAuthorize\Service\RoleProvidersServiceFactory',
-            'BjyAuthorize\ResourceProviders'        => 'BjyAuthorize\Service\ResourceProvidersServiceFactory',
-            'BjyAuthorize\RuleProviders'            => 'BjyAuthorize\Service\RuleProvidersServiceFactory',
-            'BjyAuthorize\Guard\Controller'         => 'BjyAuthorize\Service\ControllerGuardServiceFactory',
-            'BjyAuthorize\Guard\Route'              => 'BjyAuthorize\Service\RouteGuardServiceFactory',
-            'BjyAuthorize\Provider\Role\Config'     => 'BjyAuthorize\Service\ConfigRoleProviderServiceFactory',
-            'BjyAuthorize\Provider\Role\LaminasDb'  => 'BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory',
-            'BjyAuthorize\Provider\Rule\Config'     => 'BjyAuthorize\Service\ConfigRuleProviderServiceFactory',
-            'BjyAuthorize\Provider\Resource\Config' => 'BjyAuthorize\Service\ConfigResourceProviderServiceFactory',
-            'BjyAuthorize\Service\Authorize'        => 'BjyAuthorize\Service\AuthorizeFactory',
-            'BjyAuthorize\Provider\Identity\ProviderInterface'
-                => 'BjyAuthorize\Service\IdentityProviderServiceFactory',
-            'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider'
-                => 'BjyAuthorize\Service\AuthenticationIdentityProviderServiceFactory',
-            'BjyAuthorize\Provider\Role\ObjectRepositoryProvider'
-                => 'BjyAuthorize\Service\ObjectRepositoryRoleProviderFactory',
-            'BjyAuthorize\Collector\RoleCollector'  => 'BjyAuthorize\Service\RoleCollectorServiceFactory',
-            'BjyAuthorize\Provider\Identity\LmcUserLaminasDb'
-                => 'BjyAuthorize\Service\LmcUserLaminasDbIdentityProviderServiceFactory',
-            'BjyAuthorize\View\UnauthorizedStrategy'
-                => 'BjyAuthorize\Service\UnauthorizedStrategyServiceFactory',
-            'BjyAuthorize\Service\RoleDbTableGateway' => 'BjyAuthorize\Service\UserRoleServiceFactory',
+            'BjyAuthorize\Cache' => Service\CacheFactory::class,
+            'BjyAuthorize\CacheKeyGenerator' => Service\CacheKeyGeneratorFactory::class,
+            'BjyAuthorize\Config' => Service\ConfigServiceFactory::class,
+            'BjyAuthorize\Guards' => Service\GuardsServiceFactory::class,
+            'BjyAuthorize\RoleProviders' => Service\RoleProvidersServiceFactory::class,
+            'BjyAuthorize\ResourceProviders' => Service\ResourceProvidersServiceFactory::class,
+            'BjyAuthorize\RuleProviders' => Service\RuleProvidersServiceFactory::class,
+            'BjyAuthorize\Service\RoleDbTableGateway' => Service\UserRoleServiceFactory::class,
+            Collector\RoleCollector::class => Service\RoleCollectorServiceFactory::class,
+            Guard\Controller::class => Service\ControllerGuardServiceFactory::class,
+            Guard\Route::class => Service\RouteGuardServiceFactory::class,
+            Provider\Identity\AuthenticationIdentityProvider::class
+                => Service\AuthenticationIdentityProviderServiceFactory::class,
+            Provider\Identity\LmcUserLaminasDb::class => Service\LmcUserLaminasDbIdentityProviderServiceFactory::class,
+            Provider\Identity\ProviderInterface::class => Service\IdentityProviderServiceFactory::class,
+            Provider\Resource\Config::class => Service\ConfigResourceProviderServiceFactory::class,
+            Provider\Role\Config::class => Service\ConfigRoleProviderServiceFactory::class,
+            Provider\Role\LaminasDb::class => Service\LaminasDbRoleProviderServiceFactory::class,
+            Provider\Role\ObjectRepositoryProvider::class => Service\ObjectRepositoryRoleProviderFactory::class,
+            Provider\Rule\Config::class => Service\ConfigRuleProviderServiceFactory::class,
+            Service\Authorize::class => Service\AuthorizeFactory::class,
+            View\UnauthorizedStrategy::class => Service\UnauthorizedStrategyServiceFactory::class,
         ],
         'invokables'  => [
-            'BjyAuthorize\View\RedirectionStrategy' => 'BjyAuthorize\View\RedirectionStrategy',
+            View\RedirectionStrategy::class,
         ],
         'aliases'     => [
-            'bjyauthorize_zend_db_adapter' => 'Laminas\Db\Adapter\Adapter',
+            'bjyauthorize_zend_db_adapter' => \Laminas\Db\Adapter\Adapter::class,
         ],
         'initializers' => [
-            'BjyAuthorize\Service\AuthorizeAwareServiceInitializer'
-                => 'BjyAuthorize\Service\AuthorizeAwareServiceInitializer'
+            Service\AuthorizeAwareServiceInitializer::class
         ],
     ],
-
     'view_manager' => [
         'template_map' => [
             'error/403' => __DIR__ . '/../view/error/403.phtml',
-            'zend-developer-tools/toolbar/bjy-authorize-role'
-                => __DIR__ . '/../view/zend-developer-tools/toolbar/bjy-authorize-role.phtml',
+            'laminas-developer-tools/toolbar/bjy-authorize-role'
+                => __DIR__ . '/../view/laminas-developer-tools/toolbar/bjy-authorize-role.phtml',
         ],
     ],
-
-    'zenddevelopertools' => [
+    'laminas-developer-tools' => [
         'profiler' => [
             'collectors' => [
                 'bjy_authorize_role_collector' => 'BjyAuthorize\\Collector\\RoleCollector',
@@ -110,7 +104,7 @@ return [
         ],
         'toolbar' => [
             'entries' => [
-                'bjy_authorize_role_collector' => 'zend-developer-tools/toolbar/bjy-authorize-role',
+                'bjy_authorize_role_collector' => 'laminas-developer-tools/toolbar/bjy-authorize-role',
             ],
         ],
     ],

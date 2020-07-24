@@ -9,7 +9,9 @@
 namespace BjyAuthorizeTest\Service;
 
 use BjyAuthorize\Service\CacheFactory;
-use \PHPUnit\Framework\TestCase;
+use Interop\Container\ContainerInterface;
+use Laminas\Cache\Storage\Adapter\Memory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PHPUnit tests for {@see \BjyAuthorize\Service\CacheFactory}
@@ -19,23 +21,23 @@ use \PHPUnit\Framework\TestCase;
 class CacheFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\CacheFactory::createService
+     * @covers \BjyAuthorize\Service\CacheFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config         = [
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [
             'cache_options' => [
-                'adapter'   => [
+                'adapter' => [
                     'name' => 'memory',
                 ],
-                'plugins'   => [
+                'plugins' => [
                     'serializer',
                 ]
             ]
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
@@ -43,6 +45,6 @@ class CacheFactoryTest extends TestCase
 
         $factory = new CacheFactory();
 
-        $this->assertInstanceOf('Laminas\Cache\Storage\Adapter\Memory', $factory->createService($serviceLocator));
+        $this->assertInstanceOf(Memory::class, $factory($container, CacheFactory::class));
     }
 }

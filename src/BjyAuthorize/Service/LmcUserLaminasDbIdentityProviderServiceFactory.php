@@ -11,8 +11,7 @@ namespace BjyAuthorize\Service;
 use BjyAuthorize\Provider\Identity\LmcUserLaminasDb;
 use Interop\Container\ContainerInterface;
 use Laminas\Db\TableGateway\TableGateway;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory responsible of instantiating {@see \BjyAuthorize\Provider\Identity\LmcUserLaminasDb}
@@ -21,6 +20,10 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class LmcUserLaminasDbIdentityProviderServiceFactory implements FactoryInterface
 {
+    /**
+     * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
+     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /* @var $tableGateway \Laminas\Db\TableGateway\TableGateway */
@@ -34,15 +37,5 @@ class LmcUserLaminasDbIdentityProviderServiceFactory implements FactoryInterface
         $provider->setDefaultRole($config['default_role']);
 
         return $provider;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \BjyAuthorize\Provider\Identity\LmcUserLaminasDb
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, LmcUserLaminasDb::class);
     }
 }
