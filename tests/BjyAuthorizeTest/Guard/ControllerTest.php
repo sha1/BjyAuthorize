@@ -149,7 +149,7 @@ class ControllerTest extends TestCase
     public function testOnDispatchWithValidController()
     {
         $event = $this->createMvcEvent('test-controller');
-        $event->getTarget()->getEventManager()->expects($this->never())->method('trigger');
+        $event->getTarget()->getEventManager()->expects($this->never())->method('triggerEvent');
         $this
             ->authorize
             ->expects($this->any())
@@ -171,7 +171,7 @@ class ControllerTest extends TestCase
     public function testOnDispatchWithValidControllerAndAction()
     {
         $event = $this->createMvcEvent('test-controller', 'test-action');
-        $event->getTarget()->getEventManager()->expects($this->never())->method('trigger');
+        $event->getTarget()->getEventManager()->expects($this->never())->method('triggerEvent');
         $this
             ->authorize
             ->expects($this->any())
@@ -193,7 +193,7 @@ class ControllerTest extends TestCase
     public function testOnDispatchWithValidControllerAndMethod()
     {
         $event = $this->createMvcEvent('test-controller', null, 'PUT');
-        $event->getTarget()->getEventManager()->expects($this->never())->method('trigger');
+        $event->getTarget()->getEventManager()->expects($this->never())->method('triggerEvent');
         $this
             ->authorize
             ->expects($this->any())
@@ -215,7 +215,7 @@ class ControllerTest extends TestCase
     public function testOnDispatchWithValidControllerAction()
     {
         $event = $this->createMvcEvent('test-controller', 'test-action');
-        $event->getTarget()->getEventManager()->expects($this->never())->method('trigger');
+        $event->getTarget()->getEventManager()->expects($this->never())->method('triggerEvent');
         $this
             ->authorize
             ->expects($this->any())
@@ -251,12 +251,13 @@ class ControllerTest extends TestCase
         $responseCollection = $this->getMockBuilder(\Laminas\EventManager\ResponseCollection::class)
             ->getMock();
 
+        $event->setName(MvcEvent::EVENT_DISPATCH_ERROR);
         $event
             ->getTarget()
             ->getEventManager()
             ->expects($this->once())
-            ->method('trigger')
-            ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, [])
+            ->method('triggerEvent')
+            ->with($event)
             ->willReturn($responseCollection);
 
         $this->assertNull($this->controllerGuard->onDispatch($event), 'Does not stop event propagation');
