@@ -67,13 +67,10 @@ class Route extends AbstractGuard
         /* @var $app \Laminas\Mvc\Application */
         $app = $event->getTarget();
         $eventManager = $app->getEventManager();
-        $eventManager->setEventPrototype($event);
 
-        $results = $eventManager->trigger(
-            MvcEvent::EVENT_DISPATCH_ERROR,
-            null,
-            $event->getParams()
-        );
+        $event->setName(MvcEvent::EVENT_DISPATCH_ERROR);
+        $results = $eventManager->triggerEvent($event);
+
         $return  = $results->last();
         if (! $return) {
             return $event->getResult();
