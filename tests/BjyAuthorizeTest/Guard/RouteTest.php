@@ -21,12 +21,12 @@ use Laminas\Mvc\MvcEvent;
 class RouteTest extends TestCase
 {
     /**
-     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $serviceLocator;
 
     /**
-     * @var \BjyAuthorize\Service\Authorize|\PHPUnit_Framework_MockObject_MockObject
+     * @var \BjyAuthorize\Service\Authorize|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $authorize;
 
@@ -251,7 +251,7 @@ class RouteTest extends TestCase
     /**
      * @param string|null $route
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Mvc\MvcEvent
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Laminas\Mvc\MvcEvent
      */
     private function createMvcEvent($route = null)
     {

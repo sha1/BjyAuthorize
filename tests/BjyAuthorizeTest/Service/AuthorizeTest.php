@@ -8,9 +8,18 @@
 
 namespace BjyAuthorizeTest\Service;
 
+use BjyAuthorize\Provider\Identity\ProviderInterface;
+use BjyAuthorize\Provider\Resource\Config as ResourceConfig;
+use BjyAuthorize\Provider\Role\Config as RoleConfig;
 use BjyAuthorize\Service\Authorize;
-use \PHPUnit\Framework\TestCase;
+use BjyAuthorize\Service\GuardsServiceFactory;
+use BjyAuthorize\Service\ResourceProvidersServiceFactory;
+use BjyAuthorize\Service\RoleProvidersServiceFactory;
+use BjyAuthorize\Service\RuleProvidersServiceFactory;
+use Laminas\Cache\Storage\Adapter\Filesystem;
+use Laminas\Permissions\Acl\Acl;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\Authorize}
@@ -20,48 +29,53 @@ use Laminas\ServiceManager\ServiceManager;
 class AuthorizeTest extends TestCase
 {
     /** @var  ServiceManager */
-    protected $serviceLocator;
+    protected $serviceManager;
 
-    public function setUp(): void
+    /**
+     * {@inheritDoc}
+     * @see \PHPUnit\Framework\TestCase::setUp()
+     */
+    protected function setUp(): void
     {
-        $cache = $this->getMockBuilder('Laminas\Cache\Storage\Adapter\Filesystem')
+        $cache = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $cache->expects($this->any())->method('getItem');
         $cache->expects($this->any())->method('setItem');
 
-        $serviceLocator = new ServiceManager();
-        $serviceLocator->setService('BjyAuthorize\Cache', $cache);
-        $serviceLocator->setService(
-            'BjyAuthorize\Provider\Identity\ProviderInterface',
-            $this->createMock('BjyAuthorize\Provider\Identity\ProviderInterface')
-        );
-        $serviceLocator->setService(
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('BjyAuthorize\Cache', $cache);
+        $serviceManager->setService(ProviderInterface::class, $this->createMock(ProviderInterface::class));
+        $serviceManager->setService(
             'BjyAuthorize\RoleProviders',
-            $this->createMock('BjyAuthorize\Service\RoleProvidersServiceFactory')
+            $this->createMock(RoleProvidersServiceFactory::class)
         );
-
-        $serviceLocator->setService(
+        $serviceManager->setService(
             'BjyAuthorize\ResourceProviders',
-            $this->createMock('BjyAuthorize\Service\ResourceProvidersServiceFactory')
+            $this->createMock(ResourceProvidersServiceFactory::class)
         );
-
-        $serviceLocator->setService(
+        $serviceManager->setService(
             'BjyAuthorize\RuleProviders',
-            $this->createMock('BjyAuthorize\Service\RuleProvidersServiceFactory')
+            $this->createMock(RuleProvidersServiceFactory::class)
         );
-        $serviceLocator->setService(
-            'BjyAuthorize\Guards',
-            $this->createMock('BjyAuthorize\Service\GuardsServiceFactory')
-        );
-        $serviceLocator->setService(
+        $serviceManager->setService('BjyAuthorize\Guards', $this->createMock(GuardsServiceFactory::class));
+        $serviceManager->setService(
             'BjyAuthorize\CacheKeyGenerator',
             function () {
                 return 'bjyauthorize-acl';
             }
         );
-        $this->serviceLocator = $serviceLocator;
+        $this->serviceManager = $serviceManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \PHPUnit\Framework\TestCase::tearDown()
+     */
+    protected function tearDown(): void
+    {
+        unset($this->serviceManager);
     }
 
     /**
@@ -69,9 +83,9 @@ class AuthorizeTest extends TestCase
      */
     public function testLoadLoadsAclFromCacheAndDoesNotBuildANewAclObject()
     {
-        $acl = $this->createMock('Laminas\Permissions\Acl\Acl');
+        $acl = $this->createMock(Acl::class);
 
-        $cache = $this->getMockBuilder('Laminas\Cache\Storage\Adapter\Filesystem')
+        $cache = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -89,10 +103,7 @@ class AuthorizeTest extends TestCase
             );
 
         $serviceManager = new ServiceManager();
-        $serviceManager->setService(
-            'BjyAuthorize\Provider\Identity\ProviderInterface',
-            $this->createMock('BjyAuthorize\Provider\Identity\ProviderInterface')
-        );
+        $serviceManager->setService(ProviderInterface::class, $this->createMock(ProviderInterface::class));
         $serviceManager->setService('BjyAuthorize\Cache', $cache);
         $serviceManager->setService(
             'BjyAuthorize\CacheKeyGenerator',
@@ -118,35 +129,29 @@ class AuthorizeTest extends TestCase
         $cache->expects($this->once())->method('getItem');
         $cache->expects($this->once())->method('setItem');
 
-        $serviceLocator = new ServiceManager();
-        $serviceLocator->setService('BjyAuthorize\Cache', $cache);
-        $serviceLocator->setService(
-            'BjyAuthorize\Provider\Identity\ProviderInterface',
-            $this->createMock('BjyAuthorize\Provider\Identity\ProviderInterface')
-        );
-        $serviceLocator->setService(
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('BjyAuthorize\Cache', $cache);
+        $serviceManager->setService(ProviderInterface::class, $this->createMock(ProviderInterface::class));
+        $serviceManager->setService(
             'BjyAuthorize\RoleProviders',
-            $this->createMock('BjyAuthorize\Service\RoleProvidersServiceFactory')
+            $this->createMock(RoleProvidersServiceFactory::class)
         );
-        $serviceLocator->setService(
+        $serviceManager->setService(
             'BjyAuthorize\ResourceProviders',
-            $this->createMock('BjyAuthorize\Service\ResourceProvidersServiceFactory')
+            $this->createMock(ResourceProvidersServiceFactory::class)
         );
-        $serviceLocator->setService(
+        $serviceManager->setService(
             'BjyAuthorize\RuleProviders',
-            $this->createMock('BjyAuthorize\Service\RuleProvidersServiceFactory')
+            $this->createMock(RuleProvidersServiceFactory::class)
         );
-        $serviceLocator->setService(
-            'BjyAuthorize\Guards',
-            $this->createMock('BjyAuthorize\Service\GuardsServiceFactory')
-        );
-        $serviceLocator->setService(
+        $serviceManager->setService('BjyAuthorize\Guards', $this->createMock(GuardsServiceFactory::class));
+        $serviceManager->setService(
             'BjyAuthorize\CacheKeyGenerator',
             function () {
                 return 'acl';
             }
         );
-        $authorize = new Authorize(['cache_key' => 'acl'], $serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $serviceManager);
         $authorize->load();
     }
 
@@ -156,12 +161,11 @@ class AuthorizeTest extends TestCase
      */
     public function testCanAddResourceInterfaceToLoadResource()
     {
-        $serviceLocator = $this->serviceLocator;
-        $serviceLocator->setAllowOverride(true);
+        $serviceManager = $this->serviceManager;
+        $serviceManager->setAllowOverride(true);
 
-        $resourceProviderMock = $this->getMockBuilder('BjyAuthorize\Provider\Resource\Config')
+        $resourceProviderMock = $this->getMockBuilder(ResourceConfig::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getResources'])
             ->getMock();
 
         $resourceProviderMock
@@ -173,10 +177,10 @@ class AuthorizeTest extends TestCase
                 )
             );
 
-        $serviceLocator->setService('BjyAuthorize\Provider\Resource\Config', $resourceProviderMock);
-        $serviceLocator->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
+        $serviceManager->setService(ResourceConfig::class, $resourceProviderMock);
+        $serviceManager->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
 
-        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceManager);
         $authorize->load();
 
         $acl = $authorize->getAcl();
@@ -189,10 +193,10 @@ class AuthorizeTest extends TestCase
      */
     public function testCanAddTraversableResourceToLoadResource()
     {
-        $serviceLocator = $this->serviceLocator;
-        $serviceLocator->setAllowOverride(true);
+        $serviceManager = $this->serviceManager;
+        $serviceManager->setAllowOverride(true);
 
-        $resourceProviderMock = $this->getMockBuilder('BjyAuthorize\Provider\Resource\Config')
+        $resourceProviderMock = $this->getMockBuilder(ResourceConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -205,10 +209,10 @@ class AuthorizeTest extends TestCase
                 )
             );
 
-        $serviceLocator->setService('BjyAuthorize\Provider\Resource\Config', $resourceProviderMock);
-        $serviceLocator->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
+        $serviceManager->setService(ResourceConfig::class, $resourceProviderMock);
+        $serviceManager->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
 
-        $authorize = new Authorize(['cache_key' => 'acl'], $serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $serviceManager);
 
         $acl = $authorize->getAcl();
 
@@ -223,10 +227,10 @@ class AuthorizeTest extends TestCase
     {
         $this->expectException('\InvalidArgumentException');
 
-        $serviceLocator = $this->serviceLocator;
-        $serviceLocator->setAllowOverride(true);
+        $serviceManager = $this->serviceManager;
+        $serviceManager->setAllowOverride(true);
 
-        $resourceProviderMock = $this->getMockBuilder('BjyAuthorize\Provider\Resource\Config')
+        $resourceProviderMock = $this->getMockBuilder(ResourceConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -239,10 +243,10 @@ class AuthorizeTest extends TestCase
                 )
             );
 
-        $serviceLocator->setService('BjyAuthorize\Provider\Resource\Config', $resourceProviderMock);
-        $serviceLocator->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
+        $serviceManager->setService(ResourceConfig::class, $resourceProviderMock);
+        $serviceManager->setService('BjyAuthorize\ResourceProviders', [$resourceProviderMock]);
 
-        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceManager);
         $authorize->load();
     }
 
@@ -251,10 +255,10 @@ class AuthorizeTest extends TestCase
      */
     public function testCanAddTraversableRoleToLoadRole()
     {
-        $serviceLocator = $this->serviceLocator;
-        $serviceLocator->setAllowOverride(true);
+        $serviceManager = $this->serviceManager;
+        $serviceManager->setAllowOverride(true);
 
-        $roleProviderMock = $this->getMockBuilder('BjyAuthorize\Provider\Role\Config')
+        $roleProviderMock = $this->getMockBuilder(RoleConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -267,10 +271,10 @@ class AuthorizeTest extends TestCase
                 )
             );
 
-        $serviceLocator->setService('BjyAuthorize\Provider\Role\Config', $roleProviderMock);
-        $serviceLocator->setService('BjyAuthorize\RoleProviders', [$roleProviderMock]);
+        $serviceManager->setService(RoleConfig::class, $roleProviderMock);
+        $serviceManager->setService('BjyAuthorize\RoleProviders', [$roleProviderMock]);
 
-        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceLocator);
+        $authorize = new Authorize(['cache_key' => 'acl'], $this->serviceManager);
         $authorize->load();
 
         $acl = $authorize->getAcl();

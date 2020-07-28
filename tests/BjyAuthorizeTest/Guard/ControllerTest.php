@@ -22,12 +22,12 @@ use Laminas\Mvc\MvcEvent;
 class ControllerTest extends TestCase
 {
     /**
-     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\ServiceManager\ServiceLocatorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $serviceLocator;
 
     /**
-     * @var \BjyAuthorize\Service\Authorize|\PHPUnit_Framework_MockObject_MockObject
+     * @var \BjyAuthorize\Service\Authorize|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $authorize;
 
@@ -288,7 +288,7 @@ class ControllerTest extends TestCase
      * @param string|null $action
      * @param string|null $method
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Mvc\MvcEvent
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Laminas\Mvc\MvcEvent
      */
     private function createMvcEvent($controller = null, $action = null, $method = null)
     {

@@ -10,8 +10,7 @@ namespace BjyAuthorize\Service;
 
 use BjyAuthorize\Guard\Controller;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory responsible of instantiating {@see \BjyAuthorize\Guard\Controller}
@@ -20,21 +19,15 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class ControllerGuardServiceFactory implements FactoryInterface
 {
+    /**
+     * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
+     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Controller(
-            $container->get('BjyAuthorize\Config')['guards']['BjyAuthorize\Guard\Controller'],
+            $container->get('BjyAuthorize\Config')['guards'][Controller::class],
             $container
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \BjyAuthorize\Guard\Controller
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, Controller::class);
     }
 }

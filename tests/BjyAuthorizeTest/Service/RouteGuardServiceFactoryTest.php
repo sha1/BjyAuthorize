@@ -10,8 +10,11 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
+use BjyAuthorize\Guard\Route;
 use BjyAuthorize\Service\RouteGuardServiceFactory;
+use BjyAuthorize\Service\UnauthorizedStrategyServiceFactory;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\RouteGuardServiceFactory}
@@ -21,26 +24,26 @@ use BjyAuthorize\Service\RouteGuardServiceFactory;
 class RouteGuardServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\RouteGuardServiceFactory::createService
+     * @covers \BjyAuthorize\Service\RouteGuardServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new RouteGuardServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config           = [
+        $factory = new RouteGuardServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [
             'guards' => [
-                'BjyAuthorize\\Guard\\Route' => [],
+                Route::class => [],
             ],
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
             ->will($this->returnValue($config));
 
-        $guard = $factory->createService($serviceLocator);
+        $guard = $factory($container, UnauthorizedStrategyServiceFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\\Guard\\Route', $guard);
+        $this->assertInstanceOf(Route::class, $guard);
     }
 }

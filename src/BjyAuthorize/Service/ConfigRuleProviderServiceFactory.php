@@ -10,8 +10,7 @@ namespace BjyAuthorize\Service;
 
 use BjyAuthorize\Provider\Rule\Config;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory responsible of instantiating {@see \BjyAuthorize\Provider\Rule\Config}
@@ -20,20 +19,14 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class ConfigRuleProviderServiceFactory implements FactoryInterface
 {
+    /**
+     * {@inheritDoc}
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
+     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Config(
-            $container->get('BjyAuthorize\Config')['rule_providers']['BjyAuthorize\Provider\Rule\Config']
+            $container->get('BjyAuthorize\Config')['rule_providers'][Config::class]
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \BjyAuthorize\Provider\Rule\Config
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, Config::class);
     }
 }

@@ -10,8 +10,10 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
+use BjyAuthorize\Provider\Identity\ProviderInterface;
 use BjyAuthorize\Service\IdentityProviderServiceFactory;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\IdentityProviderServiceFactory}
@@ -21,16 +23,16 @@ use BjyAuthorize\Service\IdentityProviderServiceFactory;
 class IdentityProviderServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\IdentityProviderServiceFactory::createService
+     * @covers \BjyAuthorize\Service\IdentityProviderServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new IdentityProviderServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $identityProvider = $this->createMock('BjyAuthorize\\Provider\\Identity\\ProviderInterface');
-        $config           = ['identity_provider' => 'foo'];
+        $factory = new IdentityProviderServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
+        $identityProvider = $this->createMock(ProviderInterface::class);
+        $config = ['identity_provider' => 'foo'];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with($this->logicalOr('BjyAuthorize\\Config', 'foo'))
@@ -46,6 +48,6 @@ class IdentityProviderServiceFactoryTest extends TestCase
                 )
             );
 
-        $this->assertSame($identityProvider, $factory->createService($serviceLocator));
+        $this->assertSame($identityProvider, $factory($container, IdentityProviderServiceFactory::class));
     }
 }

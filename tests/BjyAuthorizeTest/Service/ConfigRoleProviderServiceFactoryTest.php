@@ -12,6 +12,8 @@ namespace BjyAuthorizeTest\Service;
 
 use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Service\ConfigRoleProviderServiceFactory;
+use BjyAuthorize\Provider\Role\Config;
+use Interop\Container\ContainerInterface;
 
 /**
  * Test for {@see \BjyAuthorize\Service\ConfigRoleProviderServiceFactory}
@@ -21,26 +23,26 @@ use BjyAuthorize\Service\ConfigRoleProviderServiceFactory;
 class ConfigRoleProviderServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\ConfigRoleProviderServiceFactory::createService
+     * @covers \BjyAuthorize\Service\ConfigRoleProviderServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new ConfigRoleProviderServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config           = [
+        $factory = new ConfigRoleProviderServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [
             'role_providers' => [
-                'BjyAuthorize\Provider\Role\Config' => [],
+                Config::class => [],
             ],
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
             ->will($this->returnValue($config));
 
-        $guard = $factory->createService($serviceLocator);
+        $guard = $factory($container,ConfigRoleProviderServiceFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\\Provider\\Role\\Config', $guard);
+        $this->assertInstanceOf(Config::class, $guard);
     }
 }

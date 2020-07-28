@@ -9,6 +9,7 @@
 namespace BjyAuthorize\Guard;
 
 use BjyAuthorize\Exception\UnAuthorizedException;
+use BjyAuthorize\Service\Authorize;
 use Laminas\Console\Request as ConsoleRequest;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Http\Request as HttpRequest;
@@ -77,7 +78,7 @@ class Controller extends AbstractGuard
     public function onDispatch(MvcEvent $event)
     {
         /* @var $service \BjyAuthorize\Service\Authorize */
-        $service = $this->serviceLocator->get('BjyAuthorize\Service\Authorize');
+        $service = $this->container->get(Authorize::class);
         $match = $event->getRouteMatch();
         $controller = $match->getParam('controller');
         $action = $match->getParam('action');

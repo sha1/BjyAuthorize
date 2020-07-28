@@ -10,8 +10,11 @@
 
 namespace BjyAuthorizeTest\Service;
 
-use \PHPUnit\Framework\TestCase;
+use BjyAuthorize\Collector\RoleCollector;
+use BjyAuthorize\Provider\Identity\ProviderInterface;
 use BjyAuthorize\Service\RoleCollectorServiceFactory;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\RoleCollectorServiceFactory}
@@ -21,22 +24,22 @@ use BjyAuthorize\Service\RoleCollectorServiceFactory;
 class RoleCollectorServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\RoleCollectorServiceFactory::createService
+     * @covers \BjyAuthorize\Service\RoleCollectorServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new RoleCollectorServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $identityProvider = $this->createMock('BjyAuthorize\\Provider\\Identity\\ProviderInterface');
+        $factory = new RoleCollectorServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
+        $identityProvider = $this->createMock(ProviderInterface::class);
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
-            ->with('BjyAuthorize\Provider\Identity\ProviderInterface')
+            ->with(ProviderInterface::class)
             ->will($this->returnValue($identityProvider));
 
-        $collector = $factory->createService($serviceLocator);
+        $collector = $factory($container, RoleCollectorServiceFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\\Collector\\RoleCollector', $collector);
+        $this->assertInstanceOf(RoleCollector::class, $collector);
     }
 }

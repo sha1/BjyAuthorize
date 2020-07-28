@@ -22,7 +22,7 @@ abstract class AbstractGuard extends AbstractListenerAggregate implements
     /**
      * @var ContainerInterface
      */
-    protected $serviceLocator;
+    protected $container;
 
     /**
      * @var array[]
@@ -32,11 +32,11 @@ abstract class AbstractGuard extends AbstractListenerAggregate implements
     /**
      *
      * @param array $rules
-     * @param ContainerInterface $serviceLocator
+     * @param ContainerInterface $container
      */
-    public function __construct(array $rules, ContainerInterface $serviceLocator)
+    public function __construct(array $rules, ContainerInterface $container)
     {
-        $this->serviceLocator = $serviceLocator;
+        $this->container = $container;
 
         foreach ($rules as $rule) {
             $rule['roles'] = (array)$rule['roles'];

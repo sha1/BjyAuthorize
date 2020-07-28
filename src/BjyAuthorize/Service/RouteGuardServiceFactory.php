@@ -10,8 +10,7 @@ namespace BjyAuthorize\Service;
 
 use BjyAuthorize\Guard\Route;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory responsible of instantiating {@see \BjyAuthorize\Guard\Route}
@@ -20,18 +19,12 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
  */
 class RouteGuardServiceFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
-        return new Route($container->get('BjyAuthorize\Config')['guards']['BjyAuthorize\Guard\Route'], $container);
-    }
-
     /**
      * {@inheritDoc}
-     *
-     * @return \BjyAuthorize\Guard\Route
+     * @see \Laminas\ServiceManager\Factory\FactoryInterface::__invoke()
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return $this($serviceLocator, Route::class);
+        return new Route($container->get('BjyAuthorize\Config')['guards'][Route::class], $container);
     }
 }

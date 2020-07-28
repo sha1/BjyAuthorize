@@ -8,9 +8,10 @@
 
 namespace BjyAuthorizeTest\Service;
 
+use BjyAuthorize\Service\Authorize;
 use BjyAuthorize\Service\AuthorizeFactory;
-use \PHPUnit\Framework\TestCase;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test for {@see \BjyAuthorize\Service\AuthorizeFactory}
@@ -20,17 +21,17 @@ use Laminas\ServiceManager\ServiceManager;
 class AuthorizeFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\AuthorizeFactory::createService
+     * @covers \BjyAuthorize\Service\AuthorizeFactory::__invoke
      */
-    public function testCreateServiceSetCacheOptionsIfCacheIsEnabledAndAdapterOptionsAreProvided()
+    public function testInvokeSetCacheOptionsIfCacheIsEnabledAndAdapterOptionsAreProvided()
     {
-        $serviceLocator = new ServiceManager();
-        $serviceLocator->setService('BjyAuthorize\Config', ['cache_key' => 'bjyauthorize_acl']);
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('BjyAuthorize\Config', ['cache_key' => 'bjyauthorize_acl']);
 
         $authorizeFactory = new AuthorizeFactory();
 
-        $authorize = $authorizeFactory->createService($serviceLocator);
+        $authorize = $authorizeFactory($serviceManager, AuthorizeFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\Service\Authorize', $authorize);
+        $this->assertInstanceOf(Authorize::class, $authorize);
     }
 }

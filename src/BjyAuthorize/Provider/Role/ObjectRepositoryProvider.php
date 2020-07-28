@@ -10,23 +10,23 @@ namespace BjyAuthorize\Provider\Role;
 
 use BjyAuthorize\Acl\HierarchicalRoleInterface;
 use BjyAuthorize\Acl\Role;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 
 /**
- * Role provider based on a {@see \Doctrine\Common\Persistence\ObjectRepository}
+ * Role provider based on a {@see \Doctrine\Persistence\ObjectRepository}
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
 class ObjectRepositoryProvider implements ProviderInterface
 {
     /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
+     * @var \Doctrine\Persistence\ObjectRepository
      */
     protected $objectRepository;
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectRepository $objectRepository
+     * @param \Doctrine\Persistence\ObjectRepository $objectRepository
      */
     public function __construct(ObjectRepository $objectRepository)
     {

@@ -19,7 +19,7 @@ use BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider;
 class AuthenticationIdentityProviderTest extends TestCase
 {
     /**
-     * @var \Laminas\Authentication\AuthenticationService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\Authentication\AuthenticationService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $authService;
 

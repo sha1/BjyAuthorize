@@ -12,6 +12,8 @@ namespace BjyAuthorizeTest\Service;
 
 use \PHPUnit\Framework\TestCase;
 use BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory;
+use BjyAuthorize\Provider\Role\LaminasDb;
+use Interop\Container\ContainerInterface;
 
 /**
  * Test for {@see \BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory}
@@ -21,26 +23,26 @@ use BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory;
 class LaminasDbRoleProviderServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory::createService
+     * @covers \BjyAuthorize\Service\LaminasDbRoleProviderServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory          = new LaminasDbRoleProviderServiceFactory();
-        $serviceLocator   = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $config           = [
+        $factory = new LaminasDbRoleProviderServiceFactory();
+        $container = $this->createMock(ContainerInterface::class);
+        $config = [
             'role_providers' => [
-                'BjyAuthorize\Provider\Role\LaminasDb' => [],
+                LaminasDb::class => [],
             ],
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with('BjyAuthorize\Config')
             ->will($this->returnValue($config));
 
-        $guard = $factory->createService($serviceLocator);
+        $guard = $factory($container, LaminasDbRoleProviderServiceFactory::class);
 
-        $this->assertInstanceOf('BjyAuthorize\\Provider\\Role\\LaminasDb', $guard);
+        $this->assertInstanceOf(LaminasDb::class, $guard);
     }
 }

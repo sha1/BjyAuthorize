@@ -11,6 +11,9 @@
 namespace BjyAuthorizeTest\Service;
 
 use \PHPUnit\Framework\TestCase;
+use Interop\Container\ContainerInterface;
+use BjyAuthorize\Service\BaseProvidersServiceFactory;
+use BjyAuthorize\Provider\Resource\ProviderInterface;
 
 /**
  * Test for {@see \BjyAuthorize\Service\ResourceProvidersServiceFactory}
@@ -20,23 +23,23 @@ use \PHPUnit\Framework\TestCase;
 class BaseProvidersServiceFactoryTest extends TestCase
 {
     /**
-     * @covers \BjyAuthorize\Service\BaseProvidersServiceFactory::createService
+     * @covers \BjyAuthorize\Service\BaseProvidersServiceFactory::__invoke
      */
-    public function testCreateService()
+    public function testInvoke()
     {
-        $factory        = $this->getMockForAbstractClass('BjyAuthorize\\Service\\BaseProvidersServiceFactory');
-        $serviceLocator = $this->createMock('Laminas\\ServiceManager\\ServiceLocatorInterface');
-        $foo            = $this->createMock('BjyAuthorize\\Provider\\Resource\\ProviderInterface');
-        $bar            = $this->createMock('BjyAuthorize\\Provider\\Resource\\ProviderInterface');
-        $config         = [
+        $factory = $this->getMockForAbstractClass(BaseProvidersServiceFactory::class);
+        $container = $this->createMock(ContainerInterface::class);
+        $foo = $this->createMock(ProviderInterface::class);
+        $bar = $this->createMock(ProviderInterface::class);
+        $config = [
             'providers' => [
-                'foo'                         => [],
-                'bar'                         => [],
+                'foo' => [],
+                'bar' => [],
                 __NAMESPACE__ . '\\MockProvider' => ['option' => 'value'],
             ],
         ];
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('has')
             ->will(
@@ -47,7 +50,7 @@ class BaseProvidersServiceFactoryTest extends TestCase
                 )
             );
 
-        $serviceLocator
+        $container
             ->expects($this->any())
             ->method('get')
             ->with($this->logicalOr('BjyAuthorize\\Config', 'foo', 'bar'))
@@ -67,7 +70,7 @@ class BaseProvidersServiceFactoryTest extends TestCase
                 )
             );
 
-        $providers = $factory->createService($serviceLocator);
+        $providers = $factory($container, BaseProvidersServiceFactory::class);
 
         $this->assertCount(3, $providers);
         $this->assertContains($foo, $providers);
@@ -88,6 +91,6 @@ class BaseProvidersServiceFactoryTest extends TestCase
         $this->assertInstanceOf(__NAMESPACE__ . '\\MockProvider', $invokableProvider);
 
         $this->assertSame(['option' => 'value'], $invokableProvider->options);
-        $this->assertSame($serviceLocator, $invokableProvider->serviceLocator);
+        $this->assertSame($container, $invokableProvider->container);
     }
 }
