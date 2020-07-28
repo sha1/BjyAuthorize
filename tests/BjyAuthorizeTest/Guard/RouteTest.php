@@ -176,7 +176,7 @@ class RouteTest extends TestCase
     public function testOnRouteWithValidRoute()
     {
         $event = $this->createMvcEvent('test-route');
-        $event->getTarget()->getEventManager()->expects($this->never())->method('trigger');
+        $event->getTarget()->getEventManager()->expects($this->never())->method('triggerEvent');
         $this
             ->authorize
             ->expects($this->any())
@@ -216,12 +216,13 @@ class RouteTest extends TestCase
         $responseCollection = $this->getMockBuilder(\Laminas\EventManager\ResponseCollection::class)
             ->getMock();
 
+        $event->setName(MvcEvent::EVENT_DISPATCH_ERROR);
         $event
             ->getTarget()
             ->getEventManager()
             ->expects($this->once())
-            ->method('trigger')
-            ->with(MvcEvent::EVENT_DISPATCH_ERROR, null, $event->getParams())
+            ->method('triggerEvent')
+            ->with($event)
             ->willReturn($responseCollection);
 
         $this->assertNull($this->routeGuard->onRoute($event), 'Does not stop event propagation');
