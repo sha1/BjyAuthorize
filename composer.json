@@ -1,5 +1,5 @@
 {
-    "name":         "kokspflanze/bjy-authorize",
+    "name":         "sha1/bjy-authorize",
     "description":  "Laminas\\Acl based firewall system for Laminas/ZF2/3 dispatch protection",
     "type":         "library",
     "license":      "BSD-3-Clause",
