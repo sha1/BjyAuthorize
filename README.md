@@ -1,6 +1,6 @@
-# BjyAuthorize - Acl security for Laminas / ZF3
+# BjyAuthorize - Acl security for Laminas
 
-[![Build Status](https://travis-ci.org/kokspflanze/BjyAuthorize.png?branch=master)](https://travis-ci.org/kokspflanze/BjyAuthorize)
+[![Continuous Integration](https://github.com/kokspflanze/BjyAuthorize/actions/workflows/continous-integration.yml/badge.svg)](https://github.com/kokspflanze/BjyAuthorize/actions/workflows/continous-integration.yml)
 [![Total Downloads](https://poser.pugx.org/kokspflanze/bjy-authorize/downloads.png)](https://packagist.org/packages/kokspflanze/bjy-authorize)
 [![Latest Stable Version](https://poser.pugx.org/kokspflanze/bjy-authorize/v/stable.png)](https://packagist.org/packages/kokspflanze/bjy-authorize)
 
@@ -11,8 +11,9 @@ setup via config files or by using `Laminas\Db` or Doctrine ORM/ODM.
 
 ## Information
 
-this is a fork of [bjyoungblood/BjyAuthorize](https://github.com/bjyoungblood/BjyAuthorize).
-I added Laminas/ZF3 support, so the module works with Laminas / Zend Framework 2 and 3.
+This is a fork of the original [bjyoungblood/BjyAuthorize](https://github.com/bjyoungblood/BjyAuthorize) module.
+I added Laminas support, so starting with release 2.0.0 the module works with Laminas. 
+Releases from the 1.x series are still targeted at Zend Framework 2 and 3.
 If you found a bug, please report it, just pm me in [gitter](https://gitter.im/kokspflanze) or open a PullRequest.
 
 ## What does BjyAuthorize do?
@@ -30,8 +31,8 @@ And here's how it would look like with BjyAuthorize enabled:
 
 ## Requirements
 
- * [Laminas](https://getlaminas.org/) / [Zend Framework 2](https://github.com/zendframework/zf2)
- * [LmcUser](https://github.com/Laminas-Commons/LmcUser) (optional)
+ * [Laminas](https://getlaminas.org/)
+ * [LmcUser](https://github.com/LM-Commons/LmcUser) (optional)
 
 ## Installation
 
@@ -40,17 +41,16 @@ And here's how it would look like with BjyAuthorize enabled:
 The suggested installation method is via [composer](http://getcomposer.org/):
 
 ```sh
-php composer.phar require kokspflanze/bjy-authorize
+composer require kokspflanze/bjy-authorize
 ```
 
 ## Configuration
 
-Following steps apply if you want to use `ZfcUser` with `Laminas\Db`. If you want to use Doctrine ORM/ODM, you should
-also check the [doctrine documentation](https://github.com/bjyoungblood/BjyAuthorize/blob/master/docs/doctrine.md).
+Following steps apply if you want to use `LmcUser` with `Laminas\Db`. If you want to use Doctrine ORM/ODM, you should
+also check the [doctrine documentation](https://github.com/kokspflanze/BjyAuthorize/blob/master/docs/doctrine.md).
 
  1. Ensure that following modules are enabled in your `application.config.php` file in the this order:
-     * `ZfcBase`
-     * `ZfcUser`
+     * `LmcUser`
      * `BjyAuthorize`
  3. Import the SQL schema located in `./vendor/BjyAuthorize/data/schema.sql`.
  4. Create a `./config/autoload/bjyauthorize.global.php` file and fill it with
@@ -70,9 +70,9 @@ return [
         /* this module uses a meta-role that inherits from any roles that should
          * be applied to the active user. the identity provider tells us which
          * roles the "identity role" should inherit from.
-         * for ZfcUser, this will be your default identity provider
+         * for LmcUser, this will be your default identity provider
         */
-        'identity_provider' => \BjyAuthorize\Provider\Identity\ZfcUserZendDb::class,
+        'identity_provider' => \BjyAuthorize\Provider\Identity\LmcUserLaminasDb::class,
 
         /* If you only have a default role and an authenticated role, you can
          * use the 'AuthenticationIdentityProvider' to allow/restrict access
@@ -102,7 +102,7 @@ return [
 
             // this will load roles from the user_role table in a database
             // format: user_role(role_id(varchar], parent(varchar))
-            \BjyAuthorize\Provider\Role\ZendDb::class => [
+            \BjyAuthorize\Provider\Role\LaminasDb::class => [
                 'table'                 => 'user_role',
                 'identifier_field_name' => 'id',
                 'role_id_field'         => 'role_id',
@@ -128,7 +128,7 @@ return [
         ],
 
         /* rules can be specified here with the format:
-         * [roles (array], resource, [privilege (array|string], assertion])
+         * [roles (array), resource, privilege (array|string), assertion]
          * assertions will be loaded using the service manager and must implement
          * Laminas\Acl\Assertion\AssertionInterface.
          * *if you use assertions, define them using the service manager!*
@@ -214,5 +214,6 @@ function cafeAction() {
 ```
 
 ## License
-Released under the MIT License. See file [LICENSE](https://github.com/bjyoungblood/BjyAuthorize/blob/master/LICENSE)
+
+Released under the MIT License. See file [LICENSE](./LICENSE)
 included with the source code for this project for a copy of the licensing terms.

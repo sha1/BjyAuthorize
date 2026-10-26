@@ -1,17 +1,11 @@
 <?php
-/**
- * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
- *
- * @link https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
- * @license http://framework.zend.com/license/new-bsd New BSD License
- */
  
 namespace MyNamespace;
 
 use BjyAuthorize\Provider\Role\ProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ZfcUser\Entity\UserInterface;
+use LmcUser\Entity\UserInterface;
 
 /**
  * An example of how to implement a role aware user entity.

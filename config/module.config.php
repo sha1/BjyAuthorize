@@ -1,12 +1,8 @@
 <?php
-/**
- * BjyAuthorize Module (https://github.com/bjyoungblood/BjyAuthorize)
- *
- * @link https://github.com/bjyoungblood/BjyAuthorize for the canonical source repository
- * @license http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace BjyAuthorize;
+
+use Laminas\Cache\Service\StorageAdapterFactoryInterface;
 
 return [
     'bjyauthorize' => [
@@ -18,7 +14,7 @@ return [
         'authenticated_role'    => 'user',
 
         // identity provider service name
-        'identity_provider'     => 'BjyAuthorize\Provider\Identity\LmcUserLaminasDb',
+        'identity_provider'     => Provider\Identity\LmcUserLaminasDb::class,
 
         // Role providers to be used to load all available roles into Laminas\Permissions\Acl\Acl
         // Keys are the provider service names, values are the options to be passed to the provider
@@ -36,19 +32,24 @@ return [
         'guards'                => [],
 
         // strategy service name for the strategy listener to be used when permission-related errors are detected
-        'unauthorized_strategy' => 'BjyAuthorize\View\UnauthorizedStrategy',
+        'unauthorized_strategy' => View\UnauthorizedStrategy::class,
 
         // Template name for the unauthorized strategy
         'template'              => 'error/403',
 
-        // cache options have to be compatible with Laminas\Cache\StorageFactory::factory
+        // Flag if cache should be enabled or not
+        'cache_enabled'         => true,
+
+        // cache options have to be compatible with Laminas\Cache\StorageAdapterFactoryInterface::create
         'cache_options'         => [
             'adapter'   => [
                 'name' => 'memory',
             ],
             'plugins'   => [
-                'serializer',
-            ]
+                [
+                    'name'=> 'serializer',
+                ],
+            ],
         ],
 
         // Key used by the cache for caching the acl
@@ -89,6 +90,11 @@ return [
             Service\AuthorizeAwareServiceInitializer::class
         ],
     ],
+    'controller_plugins' => [
+        'factories' => [
+            'isAllowed' => Controller\Plugin\IsAllowedFactory::class
+        ],
+    ],
     'view_manager' => [
         'template_map' => [
             'error/403' => __DIR__ . '/../view/error/403.phtml',
@@ -96,10 +102,15 @@ return [
                 => __DIR__ . '/../view/laminas-developer-tools/toolbar/bjy-authorize-role.phtml',
         ],
     ],
+    'view_helpers' => [
+        'factories' => [
+            'isAllowed' => View\Helper\IsAllowedFactory::class,
+        ],
+    ],
     'laminas-developer-tools' => [
         'profiler' => [
             'collectors' => [
-                'bjy_authorize_role_collector' => 'BjyAuthorize\\Collector\\RoleCollector',
+                'bjy_authorize_role_collector' => Collector\RoleCollector::class,
             ],
         ],
         'toolbar' => [
